@@ -1,0 +1,30 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+  code, pre, kbd {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Print optimizations for textbook printing */
+@media print {
+  header, nav, .no-print, button:not(.print-include) {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt !important;
+  }
+  .print-page-break {
+    page-break-before: always;
+  }
+  .prose {
+    max-width: 100% !important;
+  }
+}

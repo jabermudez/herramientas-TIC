@@ -1,0 +1,6 @@
+{
+  "name": "Manual de Herramientas TIC",
+  "description": "Manual técnico y pedagógico completo de Herramientas TIC: hardware, ofimática analítica, celulares, IA responsable, atajos y ciberseguridad.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
