@@ -291,18 +291,18 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         </div>
       </div>
 
-      {/* Mobile Trigger Button (Clear visible tap target) */}
-      <div className="sm:hidden">
+      {/* Mobile Trigger Button (Clear visible tap target, min-w-0 safe) */}
+      <div className="sm:hidden min-w-0">
         <button
           onClick={() => {
             setIsMobileModalOpen(true);
             setTimeout(() => mobileInputRef.current?.focus(), 150);
           }}
           title="Buscar temas y glosario"
-          className="w-full px-3 py-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl transition-colors shadow-2xs flex items-center gap-2 cursor-pointer"
+          className="w-full px-2.5 py-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200/70 dark:hover:bg-slate-700/70 border border-slate-200 dark:border-slate-700 rounded-xl transition-colors shadow-2xs flex items-center gap-1.5 cursor-pointer min-w-0"
         >
-          <Search className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
-          <span className="truncate">Buscar en el manual...</span>
+          <Search className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+          <span className="truncate text-[11px] sm:text-xs">Buscar...</span>
         </button>
       </div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BookOpen, HelpCircle, Radio, Sun, Moon } from 'lucide-react';
+import { BookOpen, HelpCircle, Radio, Sun, Moon, Menu, X } from 'lucide-react';
 import { SearchBar } from './SearchBar';
 
 interface HeaderProps {
@@ -42,43 +42,45 @@ export const Header: React.FC<HeaderProps> = ({
   const percentage = totalUnitsCount > 0 ? Math.round((completedUnitsCount / totalUnitsCount) * 100) : 0;
   const isAllCompleted = percentage === 100;
 
-  // Circular progress SVG math: radius 14, circumference 2 * PI * 14 ≈ 87.96
-  const radius = 14;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (percentage / 100) * circumference;
-
   return (
-    <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
-      {/* Universal Top Bar Contract: 3 zones separated by gap-4 to gap-6 */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3 sm:gap-6">
+    <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors w-full max-w-full">
+      {/* Universal Top Bar Contract: 3 zones separated by gap-2 to gap-6 */}
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 h-16 flex items-center justify-between gap-2 sm:gap-4 lg:gap-6 min-w-0">
         {/* Zone 1: Sidebar Toggle + Brand wordmark */}
-        <div className="flex items-center gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {onToggleSidebar && (
             <button
               onClick={onToggleSidebar}
-              title={isSidebarOpen ? "Ocultar panel lateral de unidades" : "Mostrar panel lateral de unidades"}
-              aria-label={isSidebarOpen ? "Ocultar menú lateral" : "Mostrar menú lateral"}
-              className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
+              title={isSidebarOpen ? "Cerrar menú lateral" : "Abrir menú lateral de navegación"}
+              aria-label={isSidebarOpen ? "Cerrar menú lateral" : "Abrir menú lateral"}
+              className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-center shrink-0 ${
                 isSidebarOpen
                   ? 'bg-indigo-50 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
                   : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'
               }`}
             >
-              <BookOpen className="w-4 h-4" />
+              {isSidebarOpen ? (
+                <>
+                  <X className="w-4 h-4 lg:hidden" />
+                  <BookOpen className="w-4 h-4 hidden lg:inline" />
+                </>
+              ) : (
+                <Menu className="w-4 h-4" />
+              )}
             </button>
           )}
 
           <button
             onClick={() => setActiveView('portada')}
-            className="text-left font-bold text-base sm:text-lg text-slate-900 dark:text-white tracking-tight whitespace-nowrap shrink-0 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2 cursor-pointer"
+            className="text-left font-bold text-sm sm:text-base lg:text-lg text-slate-900 dark:text-white tracking-tight whitespace-nowrap shrink-0 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <span className="hidden sm:inline">Manual de Herramientas TIC</span>
-            <span className="sm:hidden font-extrabold">Manual TIC</span>
+            <span className="hidden md:inline">Manual de Herramientas TIC</span>
+            <span className="md:hidden font-extrabold">Manual TIC</span>
           </button>
         </div>
 
-        {/* Global Search Bar (Generous, prominent and easy to use) */}
-        <div className="flex-1 max-w-xl md:max-w-2xl lg:max-w-3xl mx-2 sm:mx-4">
+        {/* Global Search Bar (Generous, prominent and min-w-0 responsive) */}
+        <div className="flex-1 max-w-xl md:max-w-2xl lg:max-w-3xl mx-1 sm:mx-4 min-w-0">
           <SearchBar
             onSelectUnit={onSelectUnit}
             onSelectSection={onSelectSection}
@@ -123,16 +125,16 @@ export const Header: React.FC<HeaderProps> = ({
         </nav>
 
         {/* Zone 3: Voice Tutor + Controls (Light/Dark mode + Font Size) */}
-        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
           {/* Voice Tutor Button */}
           <button
             onClick={onOpenVoiceTutor}
             title="Abrir Tutor de Voz pedagógico interactivo"
-            className="px-3 py-2 text-xs font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 rounded-xl transition-colors flex items-center gap-1.5 whitespace-nowrap shrink-0 shadow-2xs cursor-pointer"
+            className="px-2 sm:px-3 py-1.5 sm:py-2 text-xs font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/60 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 border border-indigo-200 dark:border-indigo-800 rounded-xl transition-colors flex items-center gap-1 sm:gap-1.5 whitespace-nowrap shrink-0 shadow-2xs cursor-pointer"
           >
             <Radio className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 animate-pulse" />
             <span className="hidden sm:inline">Tutor de Voz</span>
-            <span className="sm:hidden">Voz</span>
+            <span className="sm:hidden text-[11px]">Voz</span>
           </button>
 
           {/* Theme Selector: Dark / Light Mode Toggle */}
@@ -140,7 +142,7 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={onToggleTheme}
             title={theme === 'dark' ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
             aria-label={theme === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'}
-            className="p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 rounded-xl transition-all shadow-2xs cursor-pointer flex items-center justify-center"
+            className="p-1.5 sm:p-2 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700/80 border border-slate-200 dark:border-slate-700 rounded-xl transition-all shadow-2xs cursor-pointer flex items-center justify-center shrink-0"
           >
             {theme === 'dark' ? (
               <Sun className="w-4 h-4 text-amber-400 hover:rotate-45 transition-transform" />

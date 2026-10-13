@@ -7,6 +7,7 @@ import { PromptCraftSandbox } from './labs/PromptCraftSandbox';
 import { PhishingInspector } from './labs/PhishingInspector';
 import { PortsConnectorLab } from './labs/PortsConnectorLab';
 import { SearchOperatorsLab } from './labs/SearchOperatorsLab';
+import { DidacticGraphic } from './didactic/DidacticGraphic';
 
 interface UnitViewProps {
   unit: Unit;
@@ -217,19 +218,29 @@ export const UnitView: React.FC<UnitViewProps> = ({
 
             {/* Image Illustration if provided */}
             {sec.imageSrc && (
-              <figure className="my-6">
-                <img
-                  src={sec.imageSrc}
-                  alt={sec.imageAlt || sec.title}
-                  referrerPolicy="no-referrer"
-                  className="w-full max-h-[460px] object-cover rounded-2xl border border-slate-200 dark:border-slate-800 shadow-md"
-                />
+              <figure className="my-8 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl bg-slate-900 group">
+                <div className="relative overflow-hidden">
+                  <img
+                    src={sec.imageSrc}
+                    alt={sec.imageAlt || sec.title}
+                    referrerPolicy="no-referrer"
+                    className="w-full max-h-[480px] object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                  />
+                  <div className="absolute top-3 left-3 px-3 py-1 bg-slate-900/85 backdrop-blur-md rounded-full text-[11px] font-bold text-white border border-white/20 shadow-md">
+                    🖼️ Infografía Visual Temática
+                  </div>
+                </div>
                 {sec.imageCaption && (
-                  <figcaption className="text-xs text-slate-500 dark:text-slate-400 text-center mt-2 italic">
-                    {sec.imageCaption}
+                  <figcaption className="text-xs sm:text-sm text-slate-700 dark:text-slate-200 p-4 bg-slate-50 dark:bg-slate-900/90 border-t border-slate-200 dark:border-slate-800 font-medium leading-relaxed">
+                    💡 <span className="font-semibold">{sec.imageCaption}</span>
                   </figcaption>
                 )}
               </figure>
+            )}
+
+            {/* Interactive Didactic Visual Diagram if provided */}
+            {sec.didacticGraphicId && (
+              <DidacticGraphic graphicId={sec.didacticGraphicId} />
             )}
 
             {/* Embedded Interactive Sandbox based on ID */}

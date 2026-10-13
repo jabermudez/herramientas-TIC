@@ -37,12 +37,24 @@ const FAQ_CATEGORIES = [
     id: 'populares',
     label: '⭐ Populares',
     questions: [
+      '¿Qué es un computador y cómo funciona?',
+      '¿Cuál es el ciclo básico de Entrada, Proceso, Almacenamiento y Salida?',
       '¿Por qué la memoria RAM se borra al apagar la PC?',
       '¿Cómo funciona la fórmula =SI en Excel?',
       '¿Cuál es la diferencia entre un disco SSD y HDD?',
-      '¿Cómo detectar si un correo es Phishing?',
-      '¿Qué atajo recupera pestañas cerradas por error?',
-      '¿Cómo liberar espacio en mi celular sin borrar fotos?'
+      '¿Cómo detectar si un correo es Phishing?'
+    ]
+  },
+  {
+    id: 'computador',
+    label: '🖥️ El Computador y Ciclo',
+    questions: [
+      '¿Qué es exactamente un computador y para qué sirve?',
+      '¿Cuál es el ciclo de Entrada, Procesamiento, Almacenamiento y Salida?',
+      '¿Qué diferencia existe entre un dato y la información?',
+      '¿Qué tipos de computadores existen en el entorno laboral?',
+      '¿Cuál es la diferencia entre TIC y un computador?',
+      '¿Por qué un computador no es inteligente por sí solo?'
     ]
   },
   {

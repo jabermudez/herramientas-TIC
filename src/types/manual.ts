@@ -26,6 +26,7 @@ export interface UnitSection {
   steps?: ActivityStep[];
   bulletPoints?: string[];
   interactiveComponentId?: 'hardware-lab' | 'spreadsheet-lab' | 'whatsapp-lab' | 'shortcuts-lab' | 'prompt-lab' | 'phishing-lab' | 'ports-lab' | 'search-lab';
+  didacticGraphicId?: 'ecosistema-tic' | 'hardware-bus' | 'data-units' | 'os-architecture' | 'file-hierarchy' | 'excel-formula' | 'cloud-sync' | 'cyber-shield' | 'battery-care' | 'computer-cycle';
   imageSrc?: string;
   imageAlt?: string;
   imageCaption?: string;

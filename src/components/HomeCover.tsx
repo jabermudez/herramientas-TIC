@@ -141,14 +141,23 @@ export const HomeCover: React.FC<HomeCoverProps> = ({
           </button>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {units.map((unit) => {
             const isCompleted = !!completedUnits[unit.id];
+            const theme = {
+              1: { badge: 'Fundamentos & Nube', graphicFeature: 'Ecosistema TIC + Redes' },
+              2: { badge: 'Hardware & Arquitectura', graphicFeature: 'Autopista CPU-RAM-SSD + Escala Bit a TB' },
+              3: { badge: 'Ofimática Analítica', graphicFeature: 'Anatomía Fórmulas Excel + Archivos' },
+              4: { badge: 'Movilidad & Dispositivos', graphicFeature: 'Salud Batería 20-80% + Escaneo PDF' },
+              5: { badge: 'IA & Prompting', graphicFeature: 'Simulador Prompts Éticos' },
+              6: { badge: 'Ciberseguridad & 2FA', graphicFeature: 'Escudo 5 Capas + Detector Phishing' }
+            }[unit.unitNumber] || { badge: 'Contenido Técnico', graphicFeature: 'Gráficos didácticos' };
+
             return (
               <div
                 key={unit.id}
                 onClick={() => onSelectUnit(unit.id)}
-                className="group cursor-pointer p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-3xl shadow-xs hover:shadow-lg transition-all flex flex-col justify-between"
+                className="group cursor-pointer p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-3xl shadow-xs hover:shadow-xl transition-all flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
@@ -171,6 +180,16 @@ export const HomeCover: React.FC<HomeCoverProps> = ({
                   <p className="text-xs text-slate-600 dark:text-slate-300 line-clamp-2 leading-relaxed mb-4">
                     {unit.summary}
                   </p>
+
+                  {/* Didactic features badges */}
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
+                    <span className="text-[10px] font-semibold px-2.5 py-1 bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 rounded-lg border border-slate-200 dark:border-slate-700/80">
+                      🖼️ {theme.graphicFeature}
+                    </span>
+                    <span className="text-[10px] font-semibold px-2 py-1 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 rounded-lg border border-indigo-200 dark:border-indigo-800/80">
+                      🧪 Simulador
+                    </span>
+                  </div>
                 </div>
 
                 <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs font-semibold text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300">

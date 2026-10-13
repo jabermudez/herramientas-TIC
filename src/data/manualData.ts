@@ -33,6 +33,16 @@ export const UNITS_DATA: Unit[] = [
     ],
     flashcards: [
       {
+        front: '¿Qué es un Computador y cuál es su ciclo de trabajo?',
+        back: 'Es una máquina electrónica digital y programable que recibe datos (Entrada), los procesa a alta velocidad con la CPU (Procesamiento), los guarda en RAM y SSD (Almacenamiento) y entrega resultados útiles (Salida).',
+        hint: 'Sigue el ciclo de 4 fases: Entrada ➔ Procesamiento ➔ Almacenamiento ➔ Salida.'
+      },
+      {
+        front: '¿Cuál es la diferencia entre un Dato y la Información?',
+        back: 'Un dato es un registro crudo o aislado sin contexto (ej. "39.5"). La información es el dato ya procesado, ordenado y con significado útil para tomar decisiones (ej. "Temperatura: 39.5°C - Fiebre Alta").',
+        hint: 'El dato es la materia prima; la información es el producto procesado.'
+      },
+      {
         front: '¿Qué diferencia esencial existe entre Hardware y Software?',
         back: 'El Hardware es la parte física y tangible (lo que puedes tocar: pantalla, teclado, cables). El Software es la parte lógica e intangible (las instrucciones y programas: Windows, Word, navegadores).',
         hint: 'Piensa en el instrumento musical y la partitura.'
@@ -65,6 +75,10 @@ Lejos de ser únicamente "computadoras y teléfonos", las TIC constituyen el tej
           comparison: 'El sistema circulatorio del cuerpo humano',
           explanation: 'Así como los vasos sanguíneos transportan oxígeno y nutrientes a cada célula para que el organismo funcione armónicamente, las TIC transportan datos e información entre personas, instituciones y dispositivos, permitiendo que la sociedad contemporánea opere de manera ágil y articulada.'
         },
+        imageSrc: heroImage,
+        imageAlt: 'Ecosistema de Tecnologías de la Información y Comunicación (TIC)',
+        imageCaption: 'Figura 1.1: Convergencia de dispositivos físicos, redes globales y plataformas cloud en la formación laboral y ciudadana.',
+        didacticGraphicId: 'ecosistema-tic',
         callouts: [
           {
             type: 'curiosity',
@@ -79,8 +93,58 @@ Lejos de ser únicamente "computadoras y teléfonos", las TIC constituyen el tej
         ]
       },
       {
-        id: '1-2-hardware-vs-software',
-        title: '1.2 La dualidad esencial: Hardware vs. Software y Tipos de Archivos',
+        id: '1-2-el-computador-concepto-y-ciclo',
+        title: '1.2 ¿Qué es el Computador? Concepto Fundamental, Arquitectura y Ciclo de Procesamiento',
+        didacticGraphicId: 'computer-cycle',
+        content: `Un **Computador** (también conocido como computadora u ordenador) es una máquina electrónica digital y programable diseñada para recibir datos brutos del exterior, procesarlos a velocidades extraordinarias según una secuencia de instrucciones lógicas (software), almacenarlos de forma temporal o permanente, y generar información útil como resultado para el usuario.
+
+### El Ciclo Fundamental de Procesamiento de Datos (Modelo de Von Neumann):
+Todo computador, desde una microcomputadora escolar hasta el supercomputador científico más avanzado, opera bajo un ciclo secuencial de cuatro fases:
+
+1. **Entrada (Input):**
+   Es la fase donde el computador captura datos crudos del entorno a través de periféricos de entrada: teclado, ratón, micrófono, cámara web o escáner óptico. Estos dispositivos convierten señales físicas (presión mecánica, sonido, luz) en señales eléctricas digitales (unos y ceros binarios).
+2. **Procesamiento (Processing):**
+   Es el corazón de la máquina. La Unidad Central de Procesamiento (CPU) toma los datos de la memoria y ejecuta operaciones aritméticas (sumas, restas) y lógicas (comparaciones de mayor/menor, decisiones booleanas) a miles de millones de ciclos por segundo (gigahercios - GHz).
+3. **Almacenamiento (Storage):**
+   Los datos no pueden procesarse en el vacío. El computador utiliza dos niveles esenciales:
+   - **Almacenamiento primario (Memoria RAM):** Memoria de trabajo ultrarrápida pero volátil. Mantiene activos el sistema operativo y los programas mientras el computador está encendido.
+   - **Almacenamiento secundario (SSD / HDD / Nube):** Soporte no volátil que retiene archivos, documentos y fotos de forma permanente aunque se apague el equipo.
+4. **Salida (Output):**
+   Es la fase donde el sistema transforma los ceros y unos resultantes en formatos comprensibles por el ser humano: imágenes y texto proyectados en el monitor, sonido a través de altavoces o documentos físicos impresos.
+
+### La Distinción Técnica Indispensable: Dato vs. Información
+Para todo aprendiz o profesional técnico, comprender la diferencia entre estos dos términos es la base del pensamiento computacional:
+- **Dato (Materia Prima):** Es un registro, número, carácter o medición aislada y descontextualizada. Por ejemplo: \`"39.5"\` o \`"ROJO"\`. Un dato por sí solo no permite tomar decisiones informadas.
+- **Información (Producto Elaborado):** Es el resultado de organizar, procesar y contextualizar los datos brutos para conferirles significado y propósito. Por ejemplo: \`"Temperatura corporal del paciente: 39.5°C [Estado: Fiebre Alta - Requiere Atención Inmediata]"\`.
+
+### Tipos de Computadores en el Entorno Laboral:
+1. **Computadores de Escritorio (Desktop / Torre):** Diseñados para una ubicación fija. Ofrecen la máxima potencia, ergonomía superior para jornadas extensas y facilidad para sustituir o actualizar piezas internas (tarjetas de video, discos, fuentes).
+2. **Computadores Portátiles (Laptops / Notebooks):** Integran pantalla, teclado, batería recargable y procesador en un chasis ultracompacto para trabajar en movilidad.
+3. **Servidores (Data Centers y Cloud):** Máquinas robustas de altísima disponibilidad diseñadas para no apagarse jamás (24/7/365), alimentando páginas web, bases de datos y servicios en la nube a miles de usuarios simultáneos.
+4. **Dispositivos Móviles (Smartphones y Tablets):** Verdaderos computadores de bolsillo con procesadores de arquitectura ARM de bajo consumo, pantallas táctiles y sensores de geolocalización.
+5. **Sistemas Embebidos (Integrados):** Microcontroladores dedicados a una función exclusiva dentro de automóviles, cajeros automáticos, impresoras y electrodomésticos inteligentes.`,
+        analogy: {
+          concept: 'El Computador y su Ciclo de Procesamiento',
+          comparison: 'Un restaurante de alta cocina',
+          explanation: 'La comanda tomada por el mesero con los ingredientes solicitados es la Entrada (Input). El chef que cocina y sazona siguiendo la receta a gran velocidad es el Procesador (CPU). La despensa y la mesa de trabajo donde están los ingredientes listos representan el Almacenamiento (SSD y RAM). Finalmente, el plato servido en la mesa listo para el comensal es la Salida (Output).'
+        },
+        callouts: [
+          {
+            type: 'curiosity',
+            title: '¿Por qué el computador no es "inteligente" por sí solo?',
+            content: 'Un computador no reflexiona ni tiene conciencia. Solo es extraordinariamente rápido para realizar cálculos binarios (estados de encendido/apagado en transistores microscópicos). Su aparente "inteligencia" proviene del software y los algoritmos cuidadosamente diseñados por programadores humanos.'
+          },
+          {
+            type: 'tip',
+            title: 'Regla del técnico: Apagar correctamente',
+            content: 'Nunca desconectes un computador tirando del cable o pulsando bruscamente el botón de encendido si está leyendo el disco. El ciclo de almacenamiento debe cerrar los archivos en memoria RAM antes de cortar la energía para prevenir la corrupción del sistema operativo.'
+          }
+        ]
+      },
+      {
+        id: '1-3-hardware-vs-software',
+        title: '1.3 La dualidad esencial: Hardware vs. Software y Tipos de Archivos',
+        didacticGraphicId: 'os-architecture',
         content: `Todo sistema computacional, desde el supercomputador más complejo hasta un teléfono de bolsillo, opera gracias a dos dimensiones interdependientes:
 
 1. **Hardware (Lo tangible):** Corresponde a la materia física del equipo. Si puedes tocarlo con las manos o se puede romper físicamente ante un golpe, es hardware. Ejemplos: teclado, monitor, batería, memoria RAM, procesador y cables.
@@ -112,8 +176,8 @@ El sistema operativo reconoce qué programa debe abrir un archivo fijándose en 
         ]
       },
       {
-        id: '1-3-como-funciona-internet',
-        title: '1.3 Cómo funciona Internet: Redes, Protocolo HTTPS, Navegadores y Búsquedas Avanzadas',
+        id: '1-4-como-funciona-internet',
+        title: '1.4 Cómo funciona Internet: Redes, Protocolo HTTPS, Navegadores y Búsquedas Avanzadas',
         content: `Internet es una red global descentralizada de computadoras conectadas entre sí mediante fibra óptica submarina, satélites, antenas de telefonía y enrutadores (routers). Cada vez que solicitas una página web, viaja una petición en milisegundos hasta un **servidor** remoto y recibes los paquetes de datos organizados.
 
 ### Navegador Web vs. Motor de Búsqueda:
@@ -133,8 +197,12 @@ El sistema operativo reconoce qué programa debe abrir un archivo fijándose en 
         interactiveComponentId: 'search-lab'
       },
       {
-        id: '1-4-la-nube-y-ciudadania',
-        title: '1.4 La Computación en la Nube, Respaldo y Ciudadanía Digital',
+        id: '1-5-la-nube-y-ciudadania',
+        title: '1.5 La Computación en la Nube, Respaldo y Ciudadanía Digital',
+        imageSrc: mobileImage,
+        imageAlt: 'Ecosistema de Computación en la Nube y Dispositivos Conectados',
+        imageCaption: 'Figura 1.2: El entorno cloud permite centralizar documentos y acceder con respaldo simultáneo desde computadores y móviles.',
+        didacticGraphicId: 'cloud-sync',
         content: `La **Computación en la Nube (Cloud Computing)** consiste en almacenar archivos y ejecutar aplicaciones en servidores remotos de alta seguridad accesibles a través de Internet, en lugar de depender exclusivamente del disco duro local de tu computadora personal o de una memoria USB.
 
 ### Ventajas Estratégicas de la Nube:
@@ -288,6 +356,7 @@ Es la memoria ultrarrápida donde residen el sistema operativo y las aplicacione
         imageSrc: '/src/assets/images/hardware_pc_diagram_1791911809797.jpg',
         imageAlt: 'Diagrama didáctico de hardware de computador: Placa Madre, CPU, Memoria RAM y SSD',
         imageCaption: 'Figura 2.1: Arquitectura interna del computador: Placa base, procesador CPU, módulos de memoria RAM y unidad de almacenamiento SSD.',
+        didacticGraphicId: 'hardware-bus',
         callouts: [
           {
             type: 'tip',
@@ -300,6 +369,7 @@ Es la memoria ultrarrápida donde residen el sistema operativo y las aplicacione
       {
         id: '2-2-unidades-medida-almacenamiento',
         title: '2.2 Unidades de Medida de Información y Almacenamiento (SSD vs HDD)',
+        didacticGraphicId: 'data-units',
         content: `En informática, toda información (una letra, una foto, una canción) se reduce en última instancia a ceros y unos (**código binario**):
 
 ### Escala de Medida de Datos:
@@ -476,6 +546,7 @@ Especializada en procesar millones de polígonos y píxeles en paralelo. Puede s
       {
         id: '3-1-procesador-de-texto',
         title: '3.1 Procesador de Texto: Estructuración Semántica, Estilos y Formato Profesional',
+        didacticGraphicId: 'file-hierarchy',
         content: `Un procesador de texto (Microsoft Word, Google Docs) es mucho más que una máquina de escribir digital. Su valor fundamental radica en la **estructuración del contenido**:
 
 ### Estilos de Encabezado (Título 1, Título 2, Título 3)
@@ -504,6 +575,7 @@ Exporta a **PDF**: el PDF bloquea el diseño para que se vea idéntico en cualqu
       {
         id: '3-2-hojas-de-calculo-formulas',
         title: '3.2 Hojas de Cálculo: Referencias Relativas/Absolutas y Fórmulas Indispensables',
+        didacticGraphicId: 'excel-formula',
         content: `Una hoja de cálculo (Excel, Google Sheets) es una cuadrícula compuesta por **Columnas** (identificadas con letras: A, B, C...) y **Filas** (identificadas con números: 1, 2, 3...). La intersección de una columna y una fila se llama **Celda** (por ejemplo, B4 es la celda en columna B, fila 4).
 
 ### Regla de Oro de las Hojas de Cálculo:
@@ -686,6 +758,7 @@ En WhatsApp, ve a **Ajustes > Almacenamiento y datos > Administrar almacenamient
         imageSrc: '/src/assets/images/ecosistema_movil_cloud_1791911809547.jpg',
         imageAlt: 'Ilustración didáctica de productividad móvil: escaneo con celular y sincronización en la nube',
         imageCaption: 'Figura 4.1: El teléfono celular inteligente conectado con almacenamiento en la nube y herramientas de digitalización de documentos.',
+        didacticGraphicId: 'battery-care',
         callouts: [
           {
             type: 'tip',
@@ -719,6 +792,7 @@ Existen aplicaciones gratuitas nativas excelentes: **Google Drive (función Esca
       {
         id: '4-3-sincronizacion-nube-seguridad-movil',
         title: '4.3 Sincronización en la Nube y Auditoría de Permisos',
+        didacticGraphicId: 'cloud-sync',
         content: `### Sincronización Inteligente:
 Configura tus aplicaciones de nube (Google Fotos, OneDrive, iCloud) para que realicen copias de seguridad:
 - **Solo mediante Wi-Fi:** Para no consumir tu paquete de datos móviles en planes limitados.
@@ -1057,6 +1131,7 @@ El método más extendido es el **Phishing (Suplantación de Identidad)**: un at
       {
         id: '6-2-contrasenas-y-2fa',
         title: '6.2 Contraseñas Robustas y Autenticación en Dos Pasos (2FA)',
+        didacticGraphicId: 'cyber-shield',
         content: `### El Método de las Frases de Paso (Passphrases):
 El factor determinante más poderoso en una contraseña es su **longitud**.
 - *Ejemplo débil:* \`Carlos2024*\` (Descifrable en pocos minutos por fuerza bruta).
@@ -1079,6 +1154,7 @@ El 2FA es la barrera de seguridad más crucial de la era moderna:
       {
         id: '6-3-trabajo-colaborativo-permisos',
         title: '6.3 Trabajo Colaborativo en la Nube y Control de Versiones',
+        didacticGraphicId: 'cloud-sync',
         content: `Herramientas como Google Docs o Microsoft 365 permiten que múltiples personas editen el mismo documento en tiempo real. Para colaborar armónicamente, debes dominar los **Niveles de Permisos**:
 
 1. **Lector (Viewer):** La persona solo puede leer el documento. No puede borrar, editar ni escribir comentarios. Ideal para reglamentos o circulares informativas.
@@ -1258,7 +1334,9 @@ export const GLOSSARY_TERMS: GlossaryTerm[] = [
   { term: 'Browser (Navegador)', definition: 'Programa de software (como Chrome, Edge o Firefox) que interpreta el código de páginas web y lo proyecta visualmente en la pantalla del usuario.', category: 'Software' },
   { term: 'Bus de Datos', definition: 'Conjunto de líneas físicas o pistas de cobre en la placa madre a través de las cuales se transmiten las señales eléctricas entre los componentes del computador.', category: 'Hardware' },
   { term: 'Caché', definition: 'Memoria ultrarrápida de acceso temporal que guarda datos utilizados recientemente para acelerar consultas futuras sin tener que buscarlos en el origen.', category: 'Hardware' },
+  { term: 'Ciclo de Procesamiento (Input-Process-Output)', definition: 'Flujo secuencial universal del computador: captura de datos crudos (Entrada), cálculo y lógica por la CPU (Procesamiento), retención en memoria (Almacenamiento) y entrega de resultados útiles (Salida).', category: 'Hardware' },
   { term: 'Cloud Computing (La Nube)', definition: 'Modelo de suministro de servicios informáticos (servidores, almacenamiento, bases de datos) a través de Internet bajo demanda.', category: 'Redes e Internet' },
+  { term: 'Computador (Computadora / Ordenador)', definition: 'Máquina electrónica digital y programable diseñada para procesar datos crudos mediante instrucciones lógicas para transformarlos en información útil, almacenarlos y proyectarlos.', category: 'Hardware' },
   { term: 'CPU (Procesador)', definition: 'Unidad Central de Procesamiento; el microchip que ejecuta los cálculos aritméticos y lógicos del sistema informático.', category: 'Hardware' },
   { term: 'Doble Factor (2FA / MFA)', definition: 'Capa de seguridad complementaria que exige dos comprobaciones independientes (ej. contraseña + código en app) para autorizar un inicio de sesión.', category: 'Seguridad' },
   { term: 'DNS (Domain Name System)', definition: 'El directorio telefónico de Internet; traduce nombres amigables (como google.com) en direcciones numéricas IP (como 142.250.190.46).', category: 'Redes e Internet' },

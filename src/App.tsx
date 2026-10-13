@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Home, BookOpen, Terminal, HelpCircle, Radio } from 'lucide-react';
 import { UNITS_DATA } from './data/manualData';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
@@ -160,8 +161,8 @@ export default function App() {
       />
 
       {/* Main Layout Body */}
-      <div className="flex-1 flex max-w-7xl w-full mx-auto relative">
-        {/* Left Navigation Sidebar (Collapsible) */}
+      <div className="flex-1 flex max-w-7xl w-full mx-auto relative min-w-0">
+        {/* Left Navigation Sidebar (Collapsible & 100% mobile responsive) */}
         <Sidebar
           units={UNITS_DATA}
           activeUnitId={activeUnitId}
@@ -180,10 +181,12 @@ export default function App() {
           }}
           isOpen={isSidebarOpen}
           onToggle={() => setIsSidebarOpen(prev => !prev)}
+          onOpenGlossary={handleOpenGlossary}
+          onOpenVoiceTutor={() => setIsVoiceTutorOpen(true)}
         />
 
         {/* Dynamic Center Canvas */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 transition-all">
+        <main className="flex-1 p-3 sm:p-6 lg:p-8 min-w-0 transition-all max-w-full">
           {/* Quick toggle indicator banner when sidebar is closed on desktop */}
           {!isSidebarOpen && activeView === 'unidades' && (
             <div className="mb-4 flex items-center justify-between p-3 bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 rounded-xl text-xs sm:text-sm text-indigo-950 dark:text-indigo-200">
@@ -234,7 +237,7 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 px-4 sm:px-6 text-center text-xs text-slate-600 dark:text-slate-400 no-print transition-colors">
+      <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 px-4 sm:px-6 text-center text-xs text-slate-600 dark:text-slate-400 no-print transition-colors pb-20 lg:pb-6">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>
             Manual de Herramientas TIC · Guía pedagógica e interactiva para aprendices (Nivel Básico a Intermedio).
@@ -248,6 +251,69 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Mobile Bottom Navigation Bar (Persistent, thumb-friendly for phone screens) */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 lg:hidden px-2 py-1.5 flex items-center justify-around shadow-lg transition-colors no-print">
+        <button
+          onClick={() => {
+            setActiveView('portada');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl text-[10px] font-semibold transition-colors cursor-pointer ${
+            activeView === 'portada'
+              ? 'text-indigo-600 dark:text-indigo-400 font-bold'
+              : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+          }`}
+        >
+          <Home className="w-4 h-4 mb-0.5" />
+          <span>Inicio</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setIsSidebarOpen(prev => !prev);
+          }}
+          className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl text-[10px] font-semibold transition-colors cursor-pointer ${
+            isSidebarOpen || activeView === 'unidades'
+              ? 'text-indigo-600 dark:text-indigo-400 font-bold'
+              : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+          }`}
+        >
+          <BookOpen className="w-4 h-4 mb-0.5" />
+          <span>Unidades</span>
+        </button>
+
+        <button
+          onClick={() => {
+            setActiveView('talleres-practicos');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          className={`flex flex-col items-center justify-center py-1 px-3 rounded-xl text-[10px] font-semibold transition-colors cursor-pointer ${
+            activeView === 'talleres-practicos'
+              ? 'text-indigo-600 dark:text-indigo-400 font-bold'
+              : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+          }`}
+        >
+          <Terminal className="w-4 h-4 mb-0.5" />
+          <span>Talleres</span>
+        </button>
+
+        <button
+          onClick={() => handleOpenGlossary()}
+          className="flex flex-col items-center justify-center py-1 px-3 rounded-xl text-[10px] font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors cursor-pointer"
+        >
+          <HelpCircle className="w-4 h-4 mb-0.5" />
+          <span>Glosario</span>
+        </button>
+
+        <button
+          onClick={() => setIsVoiceTutorOpen(true)}
+          className="flex flex-col items-center justify-center py-1 px-3 rounded-xl text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 transition-colors cursor-pointer"
+        >
+          <Radio className="w-4 h-4 mb-0.5 animate-pulse" />
+          <span>Tutor Voz</span>
+        </button>
+      </nav>
 
       {/* Global Interactive Modals */}
       <GlossaryModal

@@ -3,8 +3,14 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+    width: 100%;
+  }
   body {
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    -webkit-tap-highlight-color: transparent;
   }
   code, pre, kbd {
     font-family: 'JetBrains Mono', monospace;
