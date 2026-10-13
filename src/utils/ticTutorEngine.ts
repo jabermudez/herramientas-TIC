@@ -22,6 +22,20 @@ interface CuratedTopic {
 }
 
 const CURATED_KNOWLEDGE: CuratedTopic[] = [
+  // --- SALUDOS Y DIÁLOGO CONVERSACIONAL ---
+  {
+    keywords: ['hola', 'buenos dias', 'buenas tardes', 'buenas noches', 'saludos', 'que tal', 'quien eres', 'como te llamas', 'que haces', 'como me ayudas'],
+    category: 'general',
+    recommendedUnit: 'Inicio del Manual TIC',
+    answer: '¡Hola! Es un gusto saludarte, aprendiz. Soy tu Tutor interactivo del Manual de Herramientas TIC. Estoy aquí para acompañarte paso a paso: puedes preguntarme sobre partes del computador, fórmulas de Excel, normas en Word, trucos de celular, atajos de teclado, ciberseguridad o cómo usar la inteligencia artificial. ¿Qué tema te gustaría explorar hoy?'
+  },
+  {
+    keywords: ['gracias', 'muchas gracias', 'excelente', 'entendido', 'muy bien'],
+    category: 'general',
+    recommendedUnit: 'Manual TIC para Aprendices',
+    answer: '¡Con muchísimo gusto, aprendiz! Me alegra que te haya servido la explicación. Si tienes otra duda o quieres practicar en los talleres interactivos de la página, dime o pregúntame cuando quieras.'
+  },
+
   // --- TALLERES INTERACTIVOS DE LA PÁGINA ---
   {
     keywords: ['talleres', 'laboratorios', 'donde estan los talleres', 'practicar', 'simulador'],
@@ -352,7 +366,7 @@ export function queryTicKnowledgeBase(userQuestion: string): TutorResponse {
     }
   }
 
-  if (bestCurated && bestCuratedScore >= 6) {
+  if (bestCurated && bestCuratedScore >= 4) {
     return {
       answer: bestCurated.answer,
       recommendedUnit: bestCurated.recommendedUnit,
@@ -384,9 +398,9 @@ export function queryTicKnowledgeBase(userQuestion: string): TutorResponse {
     }
   }
 
-  if (bestGlossary && bestGlossaryScore >= 8) {
+  if (bestGlossary && bestGlossaryScore >= 4) {
     return {
-      answer: `${bestGlossary.term}: ${bestGlossary.definition}`,
+      answer: `${bestGlossary.term}: ${bestGlossary.definition}. Puedes consultar más detalles en el Glosario de términos de la página.`,
       recommendedUnit: `Glosario de Términos (${bestGlossary.category})`,
       category: bestGlossary.category.toLowerCase()
     };
@@ -403,7 +417,7 @@ export function queryTicKnowledgeBase(userQuestion: string): TutorResponse {
         }
       }
 
-      if (matches >= 2 || (queryWords.length === 1 && normTitle.includes(queryWords[0]))) {
+      if (matches >= 1 || (queryWords.length === 1 && normTitle.includes(queryWords[0]))) {
         // Extraer primer párrafo explicativo del contenido
         const firstParagraph = sec.content
           .split('\n')
@@ -417,7 +431,7 @@ export function queryTicKnowledgeBase(userQuestion: string): TutorResponse {
             .slice(0, 320);
 
           return {
-            answer: `${cleanParagraph}... Puedes profundizar en este tema en la ${unit.title}.`,
+            answer: `${cleanParagraph}... Te invito a profundizar en este tema directamente en la ${unit.title}.`,
             recommendedUnit: `Unidad ${unit.unitNumber}: ${unit.title}`,
             category: 'unidades'
           };
@@ -427,11 +441,11 @@ export function queryTicKnowledgeBase(userQuestion: string): TutorResponse {
   }
 
   // 4. Si después de revisar el manual no se conoce la respuesta con certeza:
-  // Manifestar con sinceridad y proporcionar la guía práctica solicitada por el aprendiz
+  // Respuesta interactiva y guía práctica constructiva
   return {
     isUnknown: true,
-    answer: `No tengo registrada una respuesta específica sobre ese tema en el contenido actual del manual. Para que puedas averiguarlo de forma precisa y confiable, te brindo esta guía práctica: 1) Realiza una búsqueda en Google usando comillas con el término exacto (ejemplo: "${userQuestion.slice(0, 35)}"). 2) Consulta la documentación técnica oficial del fabricante o software. 3) Usa el buscador en la barra superior de este manual para consultar conceptos relacionados.`,
-    recommendedUnit: 'Guía de Investigación Técnica y Consulta Oficial',
+    answer: `¡Hola, aprendiz! Aunque este tema no se encuentra detallado en el contenido específico del manual técnico, te brindo esta guía práctica para resolverlo: 1) Puedes buscar en Google con comillas el término exacto "${userQuestion.slice(0, 35)}". 2) O puedes preguntarme sobre conceptos clave del manual como memoria RAM, fórmulas de Excel, atajos de teclado, ciberseguridad o inteligencia artificial. ¿Sobre cuál de ellos te gustaría aprender hoy?`,
+    recommendedUnit: 'Guía de Consulta y Autoaprendizaje Técnico',
     category: 'orientacion'
   };
 }

@@ -32,13 +32,79 @@ interface MessageItem {
 
 type TutorMode = 'web-voice' | 'gemini-live';
 
-export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClose }) => {
-  // Determine default mode based on hosting environment
-  const isStaticHosting = typeof window !== 'undefined' && (
-    window.location.hostname.includes('github.io') ||
-    window.location.protocol === 'file:'
-  );
+const FAQ_CATEGORIES = [
+  {
+    id: 'populares',
+    label: '⭐ Populares',
+    questions: [
+      '¿Por qué la memoria RAM se borra al apagar la PC?',
+      '¿Cómo funciona la fórmula =SI en Excel?',
+      '¿Cuál es la diferencia entre un disco SSD y HDD?',
+      '¿Cómo detectar si un correo es Phishing?',
+      '¿Qué atajo recupera pestañas cerradas por error?',
+      '¿Cómo liberar espacio en mi celular sin borrar fotos?'
+    ]
+  },
+  {
+    id: 'hardware',
+    label: '💻 Hardware y Diagnóstico',
+    questions: [
+      '¿Para qué sirve el procesador CPU y qué función tiene?',
+      '¿Cómo saber si el procesador se está sobrecalentando?',
+      '¿Qué función cumple la placa madre en un computador?',
+      '¿Para qué sirve la pasta térmica en el disipador?',
+      '¿Qué diferencias hay entre cables HDMI y DisplayPort?',
+      '¿Por qué es importante el mantenimiento preventivo del PC?'
+    ]
+  },
+  {
+    id: 'ofimatica',
+    label: '📊 Excel y Ofimática',
+    questions: [
+      '¿Para qué se usa el signo de dólar $ en las celdas?',
+      '¿Cómo uso las funciones =BUSCARV y =BUSCARX?',
+      '¿Cómo armar una tabla dinámica para resumir datos?',
+      '¿Cómo crear un índice de contenido automático en Word?',
+      '¿Cuáles son las normas básicas de formato y márgenes?',
+      '¿Cómo exportar a PDF sin desconfigurar el documento?'
+    ]
+  },
+  {
+    id: 'movil',
+    label: '📱 Celulares y WhatsApp',
+    questions: [
+      '¿Cómo enviar fotos y videos en calidad HD en WhatsApp?',
+      '¿Cómo usar WhatsApp Web multidispositivo en el computador?',
+      '¿Qué hábitos alargan la vida útil de la batería del móvil?',
+      '¿Para qué sirve borrar la memoria caché de las aplicaciones?',
+      '¿Cómo activar copias de seguridad automáticas en la nube?'
+    ]
+  },
+  {
+    id: 'atajos',
+    label: '⌨️ Atajos de Teclado',
+    questions: [
+      '¿Para qué sirve la combinación Windows + V en la computadora?',
+      '¿Cómo recortar la pantalla rápidamente con Win + Shift + S?',
+      '¿Qué atajo bloquea el computador al instante con Windows + L?',
+      '¿Cómo alternar entre ventanas abiertas con Alt + Tab?',
+      '¿Cómo restaurar pestañas cerradas con Ctrl + Shift + T?'
+    ]
+  },
+  {
+    id: 'seguridad-ia',
+    label: '🛡️ Ciberseguridad e IA',
+    questions: [
+      '¿Qué es la verificación en dos pasos (2FA) y cómo funciona?',
+      '¿Cómo crear una contraseña segura y fácil de recordar?',
+      '¿Qué es la regla 3-2-1 para copias de seguridad de datos?',
+      '¿Cómo redactar un prompt efectivo con Rol y Contexto para IA?',
+      '¿Qué es una alucinación en inteligencia artificial y cómo verificarla?'
+    ]
+  }
+];
 
+export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClose }) => {
   const [tutorMode, setTutorMode] = useState<TutorMode>('web-voice');
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
@@ -47,18 +113,66 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
   const [micInterimText, setMicInterimText] = useState<string>('');
   const [typedInput, setTypedInput] = useState<string>('');
   const [statusMessage, setStatusMessage] = useState<string>(
-    'Tutor de Voz activo: pulsa el micrófono o escribe tu duda'
+    'Tutor pedagógico listo: habla por micrófono o escribe tu duda'
   );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [permissionError, setPermissionError] = useState<boolean>(false);
+  const [activeFaqCategory, setActiveFaqCategory] = useState<string>('populares');
+
+  // Voice synthesis selection state
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>('');
 
   const [messages, setMessages] = useState<MessageItem[]>([
     {
       sender: 'tutor',
-      text: '¡Hola! Soy tu Tutor de Voz TIC. Puedes hablarme directamente presionando el micrófono o escribir tu duda sobre hardware, ofimática, Excel, WhatsApp o ciberseguridad.',
+      text: '¡Hola! Es un gusto saludarte, aprendiz. Soy tu Tutor interactivo del Manual TIC. ¿Qué tema de computadores, Word, Excel, celular o ciberseguridad deseas consultar hoy?',
       time: 'Ahora'
     }
   ]);
+
+  // Load and rank natural Spanish voices
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+
+    const populateSpanishVoices = () => {
+      const allVoices = window.speechSynthesis.getVoices();
+      if (!allVoices || allVoices.length === 0) return;
+
+      const spanish = allVoices.filter(
+        v => v.lang.startsWith('es') || v.lang.includes('es-') || v.lang.includes('es_')
+      );
+
+      // Rank neural/natural voices first
+      spanish.sort((a, b) => {
+        const getScore = (v: SpeechSynthesisVoice) => {
+          let s = 0;
+          const name = v.name.toLowerCase();
+          if (name.includes('natural') || name.includes('online (natural)')) s += 100;
+          if (name.includes('google')) s += 80;
+          if (name.includes('neural') || name.includes('premium')) s += 70;
+          if (name.includes('paulina') || name.includes('jorge') || name.includes('dalia') || name.includes('monica') || name.includes('alvaro')) s += 50;
+          if (name.includes('colombia') || name.includes('mexico') || name.includes('spain')) s += 20;
+          return s;
+        };
+        return getScore(b) - getScore(a);
+      });
+
+      setAvailableVoices(spanish);
+      if (spanish.length > 0 && !selectedVoiceURI) {
+        setSelectedVoiceURI(spanish[0].voiceURI);
+      }
+    };
+
+    populateSpanishVoices();
+    window.speechSynthesis.onvoiceschanged = populateSpanishVoices;
+
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = null;
+      }
+    };
+  }, [selectedVoiceURI]);
 
   // Refs for Gemini Live (WebSockets & Web Audio)
   const socketRef = useRef<WebSocket | null>(null);
@@ -150,16 +264,33 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
     try {
       window.speechSynthesis.cancel();
 
-      const utterance = new SpeechSynthesisUtterance(textToSpeak);
+      // Clean markdown characters and symbols so speech synthesis sounds human and fluent
+      const cleanSpoken = textToSpeak
+        .replace(/\*\*/g, '')
+        .replace(/\*/g, '')
+        .replace(/#{1,6}\s+/g, '')
+        .replace(/`{1,3}[^`]*`{1,3}/g, '')
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+        .replace(/^[•\-\*]\s+/gm, '')
+        .replace(/[\r\n]+/g, ' ')
+        .trim();
+
+      const utterance = new SpeechSynthesisUtterance(cleanSpoken);
       utterance.lang = 'es-ES';
-      utterance.rate = 1.0;
+      utterance.rate = 0.97; // Natural, conversational cadence
       utterance.pitch = 1.0;
 
-      // Select high quality Spanish voice if available
+      // Select chosen high quality Spanish voice
       const voices = window.speechSynthesis.getVoices();
-      const spanishVoice = voices.find(v => v.lang.startsWith('es-') || v.lang === 'es');
-      if (spanishVoice) {
-        utterance.voice = spanishVoice;
+      let chosen = voices.find(v => v.voiceURI === selectedVoiceURI);
+      if (!chosen && availableVoices.length > 0) {
+        chosen = availableVoices[0];
+      }
+      if (!chosen) {
+        chosen = voices.find(v => v.lang.startsWith('es') || v.lang.includes('es-'));
+      }
+      if (chosen) {
+        utterance.voice = chosen;
       }
 
       utterance.onstart = () => {
@@ -177,6 +308,12 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
       console.warn('SpeechSynthesis error:', e);
       setIsSpeaking(false);
     }
+  };
+
+  const handleTestVoice = () => {
+    speakTextWithBrowserSynth(
+      '¡Hola, aprendiz! Esta es mi voz de tutor pedagógico para el Manual de Herramientas TIC. ¿Cómo me escuchas?'
+    );
   };
 
   // --- WEB SPEECH RECOGNITION (Compatible with All Browsers & Devices) ---
@@ -585,12 +722,9 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
           </div>
         </div>
 
-        {/* Mode Selector Pill Bar */}
-        <div className="px-4 py-2 bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between text-xs">
-          <div className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300">
-            <span className="font-semibold text-[11px]">Modo de Conexión:</span>
-          </div>
-
+        {/* Mode Selector and Voice Configuration Bar */}
+        <div className="px-3 sm:px-4 py-2.5 bg-slate-100 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 text-xs">
+          {/* Mode Switcher */}
           <div className="flex items-center gap-1 bg-white dark:bg-slate-900 p-0.5 rounded-xl border border-slate-200 dark:border-slate-700">
             <button
               onClick={() => {
@@ -606,7 +740,7 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
               }`}
             >
               <Globe className="w-3 h-3" />
-              <span>Voz Web (Autónomo)</span>
+              <span>Voz Web Natural</span>
             </button>
 
             <button
@@ -623,14 +757,47 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
               }`}
             >
               <Cpu className="w-3 h-3" />
-              <span>Gemini Live (Servidor)</span>
+              <span>Gemini Live</span>
             </button>
           </div>
+
+          {/* Voice Selector and Test Voice Button (Active for Web Voice Mode) */}
+          {tutorMode === 'web-voice' && (
+            <div className="flex items-center gap-1.5 ml-auto">
+              {availableVoices.length > 0 && (
+                <div className="flex items-center gap-1 bg-white dark:bg-slate-900 px-2 py-1 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">Voz:</span>
+                  <select
+                    value={selectedVoiceURI}
+                    onChange={(e) => setSelectedVoiceURI(e.target.value)}
+                    className="text-[11px] font-medium bg-transparent text-slate-800 dark:text-slate-200 border-none focus:outline-none cursor-pointer max-w-[130px] sm:max-w-[170px] truncate"
+                    title="Selecciona la voz en español que suene más humana y natural"
+                  >
+                    {availableVoices.map((v) => (
+                      <option key={v.voiceURI} value={v.voiceURI} className="text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-900">
+                        {v.name.replace(/Microsoft |Google /g, '')} ({v.lang})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <button
+                onClick={handleTestVoice}
+                title="Escuchar una muestra de esta voz"
+                className="px-2 py-1 bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 border border-slate-200 dark:border-slate-700 rounded-xl text-[11px] font-semibold transition-all flex items-center gap-1 cursor-pointer shadow-2xs"
+              >
+                <Volume2 className="w-3 h-3 text-indigo-600 dark:text-indigo-400" />
+                <span className="hidden sm:inline">Probar Voz</span>
+                <span className="sm:hidden">Probar</span>
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Central Audio Microphone Zone */}
-        <div className="p-5 sm:p-6 bg-gradient-to-b from-slate-900 via-slate-850 to-slate-900 text-white flex flex-col items-center justify-center text-center border-b border-slate-800">
-          <div className="relative my-3 flex items-center justify-center">
+        <div className="p-4 sm:p-5 bg-gradient-to-b from-slate-900 via-slate-850 to-slate-900 text-white flex flex-col items-center justify-center text-center border-b border-slate-800">
+          <div className="relative my-2 sm:my-3 flex items-center justify-center">
             {/* Visualizer Pulse Rings */}
             {isRecording && (
               <div className="absolute w-28 h-28 rounded-full bg-indigo-500/30 animate-ping" />
@@ -642,7 +809,7 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
             <button
               onClick={handleMicButtonClick}
               title={isRecording ? 'Presiona para detener la escucha' : 'Presiona para hablar'}
-              className={`relative z-10 w-20 h-20 rounded-full flex items-center justify-center transition-all shadow-xl cursor-pointer ${
+              className={`relative z-10 w-18 h-18 sm:w-20 sm:h-20 rounded-full flex items-center justify-center transition-all shadow-xl cursor-pointer ${
                 isRecording
                   ? 'bg-rose-600 hover:bg-rose-700 text-white ring-4 ring-rose-400/40 scale-105'
                   : isSpeaking
@@ -653,24 +820,24 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
               }`}
             >
               {isRecording ? (
-                <Mic className="w-8 h-8 animate-pulse text-white" />
+                <Mic className="w-7 h-7 sm:w-8 sm:h-8 animate-pulse text-white" />
               ) : isSpeaking ? (
-                <Volume2 className="w-8 h-8 animate-bounce text-white" />
+                <Volume2 className="w-7 h-7 sm:w-8 sm:h-8 animate-bounce text-white" />
               ) : (
-                <Mic className="w-8 h-8 text-white" />
+                <Mic className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
               )}
             </button>
           </div>
 
-          <p className="text-xs font-semibold text-slate-100 mt-2">
+          <p className="text-xs font-semibold text-slate-100 mt-1">
             {isRecording
-              ? 'Escuchando tu voz... Di tu pregunta con claridad'
+              ? 'Escuchando tu voz... Habla con naturalidad sobre el tema que necesitas'
               : isSpeaking
               ? 'El Tutor está respondiendo en voz alta...'
               : tutorMode === 'web-voice'
               ? 'Presiona el micrófono para hablar con tu voz'
               : isConnected
-              ? 'Conectado a Gemini 3.8 Live. Habla en tiempo real'
+              ? 'Conectado a Gemini Live. Habla en tiempo real'
               : 'Presiona el botón para conectar con el Tutor'}
           </p>
 
@@ -705,24 +872,41 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
           )}
         </div>
 
-        {/* Suggestion Quick Chips */}
+        {/* Categorized FAQ Questions Section (Expanded with 30+ interactive questions) */}
         <div className="p-3 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800">
-          <p className="text-[10px] uppercase font-bold text-slate-400 dark:text-slate-500 mb-1.5 px-1">
-            Preguntas frecuentes del manual:
-          </p>
-          <div className="flex flex-wrap gap-1.5">
-            {[
-              '¿Por qué la memoria RAM se borra al apagar la PC?',
-              '¿Cómo funciona la fórmula =SI en Excel?',
-              '¿Cuál es la diferencia entre un disco SSD y HDD?',
-              '¿Cómo detectar si un correo es Phishing?',
-              '¿Qué atajo recupera pestañas cerradas por error?',
-              '¿Cómo liberar espacio en mi celular sin borrar fotos?'
-            ].map((q, i) => (
+          <div className="flex items-center justify-between mb-1.5 px-1">
+            <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-slate-400">
+              Preguntas frecuentes del aprendiz:
+            </span>
+            <span className="text-[10px] text-slate-400 dark:text-slate-500">
+              Toca cualquier pregunta para escuchar la explicación
+            </span>
+          </div>
+
+          {/* FAQ Category Pills */}
+          <div className="flex items-center gap-1 overflow-x-auto pb-1.5 scrollbar-thin">
+            {FAQ_CATEGORIES.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveFaqCategory(cat.id)}
+                className={`px-2.5 py-1 rounded-lg text-[10px] sm:text-[11px] font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                  activeFaqCategory === cat.id
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Questions for active category */}
+          <div className="flex flex-wrap gap-1.5 mt-1.5 max-h-24 overflow-y-auto">
+            {FAQ_CATEGORIES.find((c) => c.id === activeFaqCategory)?.questions.map((q, i) => (
               <button
                 key={i}
                 onClick={() => handleSendTextQuery(q)}
-                className="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 hover:border-indigo-300 dark:hover:border-indigo-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-[11px] transition-colors cursor-pointer"
+                className="px-2.5 py-1 bg-white dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 hover:border-indigo-300 dark:hover:border-indigo-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-[11px] transition-colors cursor-pointer text-left"
               >
                 💬 {q}
               </button>

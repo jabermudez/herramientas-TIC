@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Unit, CalloutBox, Flashcard } from '../types/manual';
-import { CheckCircle2, AlertTriangle, Lightbulb, HelpCircle, Target, ArrowRight, ArrowLeft, BookOpen, Layers, Sparkles, RotateCw, Volume2, VolumeX } from 'lucide-react';
+import { CheckCircle2, AlertTriangle, Lightbulb, HelpCircle, Target, ArrowRight, ArrowLeft, BookOpen, Layers, Sparkles, RotateCw, Volume2, VolumeX, Printer } from 'lucide-react';
 import { HardwareExplorer } from './labs/HardwareExplorer';
 import { SpreadsheetSimulator } from './labs/SpreadsheetSimulator';
 import { PromptCraftSandbox } from './labs/PromptCraftSandbox';
@@ -125,12 +125,23 @@ export const UnitView: React.FC<UnitViewProps> = ({
     <article className="max-w-4xl mx-auto py-4 px-2 sm:px-4">
       {/* Unit Header */}
       <div className="border-b border-slate-200 dark:border-slate-800 pb-6 mb-8 transition-colors">
-        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400 mb-2">
-          <span className="font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/70 px-2.5 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-800">
-            Unidad {unit.unitNumber}
-          </span>
-          <span aria-hidden="true">·</span>
-          <span className="font-medium text-slate-600 dark:text-slate-300">{unit.level}</span>
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+          <div className="flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+            <span className="font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/70 px-2.5 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-800">
+              Unidad {unit.unitNumber}
+            </span>
+            <span aria-hidden="true">·</span>
+            <span className="font-medium text-slate-600 dark:text-slate-300">{unit.level}</span>
+          </div>
+
+          <button
+            onClick={() => window.print()}
+            title="Imprimir esta unidad temática o guardarla como PDF"
+            className="px-3.5 py-1.5 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-xl transition-all shadow-2xs flex items-center gap-1.5 cursor-pointer print:hidden"
+          >
+            <Printer className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+            <span>Imprimir Unidad / PDF</span>
+          </button>
         </div>
 
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-3">
@@ -441,6 +452,15 @@ export const UnitView: React.FC<UnitViewProps> = ({
               Reintentar Cuestionario
             </button>
           )}
+
+          <button
+            onClick={() => window.print()}
+            title="Imprimir unidad completa o exportar como PDF"
+            className="px-4 py-2.5 text-xs font-semibold rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all flex items-center gap-2 cursor-pointer shadow-2xs print:hidden"
+          >
+            <Printer className="w-4 h-4 text-slate-500" />
+            <span>Imprimir Guía / PDF</span>
+          </button>
 
           <button
             onClick={() => onToggleComplete(unit.id)}

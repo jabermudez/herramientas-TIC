@@ -34,7 +34,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// REST endpoint for Voice Tutor Q&A using Gemini 3.8 Flash
+// REST endpoint for Voice Tutor Q&A using resilient Gemini model pipeline
 app.post('/api/tutor-ask', async (req, res) => {
   const { question } = req.body;
   if (!question || typeof question !== 'string') {
@@ -42,13 +42,9 @@ app.post('/api/tutor-ask', async (req, res) => {
   }
 
   if (apiKey && apiKey !== 'MY_GEMINI_API_KEY') {
-    try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-3.8-flash',
-        contents: question,
-        config: {
-          systemInstruction: `Eres el Tutor de Voz pedagógico del "Manual de Herramientas TIC para Aprendices".
-Tu rol es responder directamente a cualquier duda que el aprendiz te formule sobre los temas del manual, las unidades formativas, los talleres interactivos de la página o conceptos de tecnología.
+    const candidateModels = ['gemini-3.1-flash-lite', 'gemini-3.8-flash', 'gemini-flash-latest'];
+    const systemPrompt = `Eres el Tutor de Voz pedagógico e interactivo del "Manual de Herramientas TIC para Aprendices".
+Tu misión es guiar, motivar y enseñar de manera cálida, natural, clara y cercana a aprendices de formación técnica y laboral en Colombia y Latinoamérica.
 
 Estructura del Manual de Herramientas TIC:
 - Unidad 1: Fundamentos de las TIC y Entorno Digital (Hardware vs Software, Cloud, extensiones de archivos, HTTPS, huella digital).
@@ -70,29 +66,44 @@ Talleres prácticos disponibles en la página:
 - Laboratorio de Operadores de Búsqueda Google
 - Taller de Ingeniería de Prompts
 
-REGLAS OBLIGATORIAS DE RESPUESTA:
-1. Responde DIRECTAMENTE y al grano sobre el tema que el aprendiz pregunta. NUNCA respondas con una introducción vacía o evasiva.
-2. Explica el concepto de forma clara, amigable y explicativa (2 a 4 oraciones bien explicadas para que sea óptimo al escucharse en voz alta).
-3. Si el tema se aborda en una unidad o taller de la página, menciona brevemente la unidad recomendada.
-4. SI NO SABES LA RESPUESTA, O SI LA PREGUNTA NO ESTÁ EN EL MANUAL O ESTÁ FUERA DE SU ALCANCE TÉCNICO:
-   - Manifiéstalo abiertamente con transparencia (ejemplo: "No tengo esa respuesta específica registrada en este manual...").
-   - Y proporciona de inmediato una guía práctica de cómo averiguarlo (por ejemplo: qué términos buscar entre comillas en Google, cómo consultar la documentación técnica oficial o qué prueba segura realizar en el equipo).
-5. Trata al usuario siempre como "aprendiz", con calidez pedagógica y entusiasmo formativo.`
-        }
-      });
+PAUTAS DE COMUNICACIÓN NATURAL E INTERACTIVA:
+1. Habla con un tono humano, amigable, motivador y directo (óptimo para voz hablada).
+2. Explica el concepto en 2 a 4 oraciones sustanciosas y fáciles de entender, sin rodeos ni introducción repetitiva.
+3. Brinda ejemplos prácticos de la vida cotidiana del aprendiz (ej. oficinas, talleres, tareas, celulares).
+4. Si la consulta se relaciona con una unidad o taller de este manual, menciónalo con entusiasmo ("Te recomiendo practicar esto en la Unidad 4" o "Pruébalo en el Taller de Atajos").
+5. Si te saludan o preguntan quién eres ("hola", "cómo estás", "en qué me puedes ayudar"), saluda con naturalidad y ofrece ejemplos de temas que pueden consultar.
+6. Si te preguntan algo que no está en el manual o está fuera del ámbito de tecnología e informática:
+   - Responde con naturalidad sincera (ej: "Ese tema no está contemplado en el manual técnico actual").
+   - Brinda una guía práctica inmediata sobre cómo buscarlo de forma segura (palabras clave en Google, documentación oficial o foros especializados).
+7. Trata al usuario siempre como "aprendiz", con respeto y vocación formativa.`;
 
-      const text = response.text || '';
-      return res.json({
-        answer: text,
-        source: 'gemini'
-      });
-    } catch (err: any) {
-      console.error('[Gemini Tutor Ask Error]', err);
+    for (const modelName of candidateModels) {
+      try {
+        const response = await ai.models.generateContent({
+          model: modelName,
+          contents: question,
+          config: {
+            systemInstruction: systemPrompt,
+          },
+        });
+
+        const text = response.text || '';
+        if (text) {
+          return res.json({
+            answer: text,
+            source: 'gemini',
+            modelUsed: modelName,
+          });
+        }
+      } catch (err: any) {
+        console.warn(`[Gemini Tutor ${modelName} warning]:`, err?.message || err);
+        // Continue to next model candidate
+      }
     }
   }
 
   return res.json({
-    useLocalFallback: true
+    useLocalFallback: true,
   });
 });
 
@@ -117,7 +128,7 @@ wss.on('connection', async (clientWs: WebSocket) => {
       config: {
         responseModalities: [Modality.AUDIO],
         speechConfig: {
-          voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Puck' } },
+          voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Zephyr' } },
         },
         systemInstruction:
           'Eres el Tutor de Voz pedagógico del "Manual de Herramientas TIC para Aprendices". Responde directamente a cualquier duda del aprendiz sobre el manual (hardware, procesadores de texto, Excel, celulares, WhatsApp, atajos de teclado, ciberseguridad, inteligencia artificial y talleres prácticos). Mantén respuestas explicativas y claras de 2 a 4 oraciones. Si no sabes la respuesta o no está en el manual, manifiéstalo con sinceridad y da una guía práctica de cómo averiguarlo (ej. qué buscar en Google o documentación oficial). Trata al usuario siempre como "aprendiz".',
