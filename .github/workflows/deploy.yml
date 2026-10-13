@@ -2,7 +2,7 @@ name: Desplegar a GitHub Pages
 
 on:
   push:
-    branches: ['main']
+    branches: ['main', 'master']
   workflow_dispatch:
 
 permissions:
@@ -31,7 +31,7 @@ jobs:
           cache: 'npm'
 
       - name: Instalar dependencias
-        run: npm ci || npm install
+        run: npm ci || npm install --legacy-peer-deps
 
       - name: Compilar aplicación (Vite Build)
         run: npm run build
