@@ -50,30 +50,30 @@ export const SearchOperatorsLab: React.FC = () => {
   const activeOp = OPERATORS_DATA.find(o => o.operator === selectedOp) || OPERATORS_DATA[0];
 
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm my-6">
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200 mb-5">
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm my-6 transition-colors">
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-slate-800 mb-5">
         <div className="flex items-center gap-2">
-          <div className="p-2 bg-sky-50 rounded-lg text-sky-600">
+          <div className="p-2 bg-sky-50 dark:bg-sky-950/60 rounded-lg text-sky-600 dark:text-sky-400">
             <Search className="w-6 h-6" />
           </div>
           <div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-sky-600">Taller de Destreza Digital</span>
-            <h4 className="text-xl font-bold text-slate-900">Operadores de Búsqueda Avanzada en la Web</h4>
+            <span className="text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400">Taller de Destreza Digital</span>
+            <h4 className="text-xl font-bold text-slate-900 dark:text-white">Operadores de Búsqueda Avanzada en la Web</h4>
           </div>
         </div>
-        <span className="text-xs text-slate-500">Aprende a buscar como un profesional</span>
+        <span className="text-xs text-slate-500 dark:text-slate-400">Aprende a buscar información precisa como aprendiz</span>
       </div>
 
       {/* Operator Buttons */}
-      <div className="flex flex-wrap gap-2 mb-5 p-1.5 bg-slate-100 rounded-xl">
+      <div className="flex flex-wrap gap-2 mb-5 p-1.5 bg-slate-100 dark:bg-slate-800/80 rounded-xl">
         {OPERATORS_DATA.map(item => (
           <button
             key={item.operator}
             onClick={() => setSelectedOp(item.operator)}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors ${
+            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
               selectedOp === item.operator
-                ? 'bg-white text-slate-900 shadow-xs'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs font-bold'
+                : 'text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             {item.operator}
@@ -82,24 +82,24 @@ export const SearchOperatorsLab: React.FC = () => {
       </div>
 
       {/* Demo Box */}
-      <div className="p-5 bg-sky-50/50 rounded-xl border border-sky-200">
+      <div className="p-5 bg-sky-50/70 dark:bg-sky-950/40 rounded-xl border border-sky-200 dark:border-sky-800/60">
         <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <h5 className="text-base font-bold text-slate-900">Operador: {activeOp.syntax}</h5>
-          <span className="text-xs font-mono font-semibold bg-white px-2.5 py-1 rounded border border-sky-300 text-sky-900">
+          <h5 className="text-base font-bold text-slate-900 dark:text-white">Operador: {activeOp.syntax}</h5>
+          <span className="text-xs font-mono font-semibold bg-white dark:bg-slate-800 px-2.5 py-1 rounded border border-sky-300 dark:border-sky-700 text-sky-900 dark:text-sky-200">
             {activeOp.simulatedReduction}
           </span>
         </div>
 
-        <p className="text-xs text-slate-700 leading-relaxed mb-4">{activeOp.description}</p>
+        <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed mb-4">{activeOp.description}</p>
 
         {/* Search bar simulation */}
-        <div className="bg-white p-3 rounded-lg border border-slate-300 shadow-inner flex items-center gap-3 mb-4">
-          <Search className="w-4 h-4 text-slate-400 shrink-0" />
-          <span className="font-mono text-xs text-slate-900 font-semibold">{activeOp.exampleQuery}</span>
+        <div className="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-300 dark:border-slate-700 shadow-inner flex items-center gap-3 mb-4">
+          <Search className="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0" />
+          <span className="font-mono text-xs sm:text-sm text-slate-900 dark:text-white font-semibold">{activeOp.exampleQuery}</span>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-slate-600">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
           <span><strong>Caso de uso recomendado:</strong> {activeOp.idealFor}</span>
         </div>
       </div>

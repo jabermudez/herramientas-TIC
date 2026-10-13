@@ -72,46 +72,46 @@ export const UnitView: React.FC<UnitViewProps> = ({
     switch (callout.type) {
       case 'tip':
         return (
-          <div key={index} className="my-5 p-4.5 bg-emerald-50/80 dark:bg-emerald-950/30 border border-emerald-300/80 dark:border-emerald-800/60 rounded-2xl text-slate-800 dark:text-slate-200 shadow-xs transition-colors">
-            <div className="flex items-center gap-2 mb-1.5 text-emerald-800 dark:text-emerald-400 font-bold text-xs uppercase tracking-wider">
+          <div key={index} className="my-6 p-5 bg-emerald-50/90 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 rounded-2xl text-slate-800 dark:text-slate-100 shadow-xs transition-colors">
+            <div className="flex items-center gap-2 mb-1.5 text-emerald-800 dark:text-emerald-300 font-bold text-xs uppercase tracking-wider">
               <Lightbulb className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Consejo Pro · Productividad</span>
+              <span>Consejo de Productividad para el Aprendiz</span>
             </div>
-            <h6 className="font-bold text-sm text-emerald-950 dark:text-emerald-200 mb-1">{callout.title}</h6>
-            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{callout.content}</p>
+            <h6 className="font-bold text-base text-emerald-950 dark:text-emerald-100 mb-1.5">{callout.title}</h6>
+            <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed">{callout.content}</p>
           </div>
         );
       case 'warning':
         return (
-          <div key={index} className="my-5 p-4.5 bg-amber-50/80 dark:bg-amber-950/30 border border-amber-300/80 dark:border-amber-800/60 rounded-2xl text-slate-800 dark:text-slate-200 shadow-xs transition-colors">
-            <div className="flex items-center gap-2 mb-1.5 text-amber-800 dark:text-amber-400 font-bold text-xs uppercase tracking-wider">
+          <div key={index} className="my-6 p-5 bg-amber-50/90 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 rounded-2xl text-slate-800 dark:text-slate-100 shadow-xs transition-colors">
+            <div className="flex items-center gap-2 mb-1.5 text-amber-900 dark:text-amber-300 font-bold text-xs uppercase tracking-wider">
               <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>Advertencia de Seguridad Digital</span>
             </div>
-            <h6 className="font-bold text-sm text-amber-950 dark:text-amber-200 mb-1">{callout.title}</h6>
-            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{callout.content}</p>
+            <h6 className="font-bold text-base text-amber-950 dark:text-amber-100 mb-1.5">{callout.title}</h6>
+            <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed">{callout.content}</p>
           </div>
         );
       case 'curiosity':
         return (
-          <div key={index} className="my-5 p-4.5 bg-sky-50/80 dark:bg-sky-950/30 border border-sky-300/80 dark:border-sky-800/60 rounded-2xl text-slate-800 dark:text-slate-200 shadow-xs transition-colors">
-            <div className="flex items-center gap-2 mb-1.5 text-sky-800 dark:text-sky-400 font-bold text-xs uppercase tracking-wider">
+          <div key={index} className="my-6 p-5 bg-sky-50/90 dark:bg-sky-950/40 border border-sky-300 dark:border-sky-800 rounded-2xl text-slate-800 dark:text-slate-100 shadow-xs transition-colors">
+            <div className="flex items-center gap-2 mb-1.5 text-sky-900 dark:text-sky-300 font-bold text-xs uppercase tracking-wider">
               <HelpCircle className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-              <span>Dato Curioso & Evolución</span>
+              <span>Dato Curioso & Evolución Tecnológica</span>
             </div>
-            <h6 className="font-bold text-sm text-sky-950 dark:text-sky-200 mb-1">{callout.title}</h6>
-            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{callout.content}</p>
+            <h6 className="font-bold text-base text-sky-950 dark:text-sky-100 mb-1.5">{callout.title}</h6>
+            <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed">{callout.content}</p>
           </div>
         );
       case 'challenge':
         return (
-          <div key={index} className="my-5 p-4.5 bg-indigo-50/80 dark:bg-indigo-950/30 border border-indigo-300/80 dark:border-indigo-800/60 rounded-2xl text-slate-800 dark:text-slate-200 shadow-xs transition-colors">
-            <div className="flex items-center gap-2 mb-1.5 text-indigo-800 dark:text-indigo-400 font-bold text-xs uppercase tracking-wider">
+          <div key={index} className="my-6 p-5 bg-indigo-50/90 dark:bg-indigo-950/40 border border-indigo-300 dark:border-indigo-800 rounded-2xl text-slate-800 dark:text-slate-100 shadow-xs transition-colors">
+            <div className="flex items-center gap-2 mb-1.5 text-indigo-900 dark:text-indigo-300 font-bold text-xs uppercase tracking-wider">
               <Target className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-              <span>Reto Práctico</span>
+              <span>Reto Práctico del Aprendiz</span>
             </div>
-            <h6 className="font-bold text-sm text-indigo-950 dark:text-indigo-200 mb-1">{callout.title}</h6>
-            <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{callout.content}</p>
+            <h6 className="font-bold text-base text-indigo-950 dark:text-indigo-100 mb-1.5">{callout.title}</h6>
+            <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed">{callout.content}</p>
           </div>
         );
       default:
@@ -139,15 +139,15 @@ export const UnitView: React.FC<UnitViewProps> = ({
         <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed">{unit.subtitle}</p>
 
         {/* Learning Objectives Card */}
-        <div className="mt-6 p-5 bg-gradient-to-br from-slate-50 to-indigo-50/40 dark:from-slate-900 dark:to-indigo-950/40 border border-indigo-100 dark:border-indigo-900/50 rounded-2xl shadow-xs transition-colors">
+        <div className="mt-6 p-6 bg-gradient-to-br from-slate-50 to-indigo-50/50 dark:from-slate-900 dark:to-indigo-950/50 border border-indigo-200 dark:border-indigo-800/80 rounded-2xl shadow-xs transition-colors">
           <div className="flex items-center gap-2 mb-3">
             <Target className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-            <h4 className="font-bold text-slate-900 dark:text-white text-sm">Objetivos de Aprendizaje de la Unidad</h4>
+            <h4 className="font-bold text-slate-900 dark:text-white text-base">Objetivos de Aprendizaje para el Aprendiz</h4>
           </div>
-          <ul className="grid grid-cols-1 gap-2.5">
+          <ul className="grid grid-cols-1 gap-3">
             {unit.learningObjectives.map((obj, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+              <li key={i} className="flex items-start gap-3 text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed font-normal">
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <span>{obj}</span>
               </li>
             ))}
@@ -159,45 +159,45 @@ export const UnitView: React.FC<UnitViewProps> = ({
       <div className="space-y-12">
         {unit.sections.map((sec) => (
           <section key={sec.id} id={sec.id} className="scroll-mt-24">
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-4 pb-2 border-b border-slate-100 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 transition-colors">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mb-4 pb-2 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-2 transition-colors">
               <span>{sec.title}</span>
               <button
                 onClick={() => handleToggleReadSection(sec.id, sec.title, sec.content)}
                 title={readingSectionId === sec.id ? 'Detener lectura en voz alta' : 'Escuchar esta sección con voz'}
-                className={`px-3 py-1 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all shadow-2xs ${
+                className={`px-3 py-1.5 rounded-xl text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all shadow-2xs cursor-pointer ${
                   readingSectionId === sec.id
                     ? 'bg-rose-100 dark:bg-rose-950/70 text-rose-800 dark:text-rose-200 border border-rose-300 dark:border-rose-800 animate-pulse'
-                    : 'bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 hover:text-indigo-600 dark:hover:text-indigo-400 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700'
+                    : 'bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 dark:hover:bg-indigo-950/60 hover:text-indigo-600 dark:hover:text-indigo-400 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700'
                 }`}
               >
-                {readingSectionId === sec.id ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />}
+                {readingSectionId === sec.id ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />}
                 <span>{readingSectionId === sec.id ? 'Detener Voz' : 'Escuchar Sección'}</span>
               </button>
             </h2>
 
             {/* Prose Content */}
-            <div className={`text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap ${textClass} space-y-4 mb-4`}>
+            <div className={`text-slate-800 dark:text-slate-200 leading-relaxed whitespace-pre-wrap ${textClass} space-y-4 mb-4`}>
               {sec.content}
             </div>
 
             {/* Pedagogical Analogy Callout if provided */}
             {sec.analogy && (
-              <div className="my-6 p-5 bg-gradient-to-r from-amber-50/90 to-orange-50/60 dark:from-amber-950/40 dark:to-orange-950/20 border border-amber-300/80 dark:border-amber-800/60 rounded-2xl shadow-xs transition-colors">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-900 dark:text-amber-400 mb-1">
+              <div className="my-6 p-6 bg-gradient-to-r from-amber-50 to-orange-50/70 dark:from-amber-950/40 dark:to-orange-950/30 border border-amber-300 dark:border-amber-800 rounded-2xl shadow-xs transition-colors">
+                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-amber-900 dark:text-amber-300 mb-1.5">
                   <span>Analogía Didáctica Cotidiana: {sec.analogy.concept}</span>
                 </div>
-                <p className="text-sm font-bold text-amber-950 dark:text-amber-200 mb-1">
+                <p className="text-base font-bold text-amber-950 dark:text-amber-100 mb-2">
                   Comparación: {sec.analogy.comparison}
                 </p>
-                <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{sec.analogy.explanation}</p>
+                <p className="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed">{sec.analogy.explanation}</p>
               </div>
             )}
 
             {/* Bullet points if provided */}
             {sec.bulletPoints && sec.bulletPoints.length > 0 && (
-              <ul className="my-4 space-y-2 pl-4 border-l-2 border-indigo-400 dark:border-indigo-500">
+              <ul className="my-4 space-y-2.5 pl-4 border-l-3 border-indigo-500 dark:border-indigo-400">
                 {sec.bulletPoints.map((bp, i) => (
-                  <li key={i} className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <li key={i} className="text-sm sm:text-base text-slate-800 dark:text-slate-200 leading-relaxed">
                     • {bp}
                   </li>
                 ))}
@@ -262,18 +262,18 @@ export const UnitView: React.FC<UnitViewProps> = ({
                   }`}
                 >
                   <div className="flex items-center justify-between text-xs mb-2">
-                    <span className={`font-semibold uppercase tracking-wider text-[10px] ${isFlipped ? 'text-purple-300' : 'text-slate-400 dark:text-slate-500'}`}>
+                    <span className={`font-bold uppercase tracking-wider text-xs ${isFlipped ? 'text-purple-200' : 'text-slate-500 dark:text-slate-400'}`}>
                       {isFlipped ? 'Respuesta / Explicación' : `Pregunta ${cIdx + 1}`}
                     </span>
-                    <RotateCw className={`w-3.5 h-3.5 ${isFlipped ? 'text-purple-300' : 'text-slate-400 dark:text-slate-500'}`} />
+                    <RotateCw className={`w-4 h-4 ${isFlipped ? 'text-purple-200' : 'text-slate-500 dark:text-slate-400'}`} />
                   </div>
 
-                  <p className={`text-xs sm:text-sm font-semibold leading-relaxed my-auto ${isFlipped ? 'text-white' : 'text-slate-900 dark:text-white'}`}>
+                  <p className={`text-sm sm:text-base font-semibold leading-relaxed my-auto ${isFlipped ? 'text-white' : 'text-slate-900 dark:text-white'}`}>
                     {isFlipped ? card.back : card.front}
                   </p>
 
-                  <div className="text-[10px] pt-2 border-t border-black/10 dark:border-white/10 mt-2 flex items-center justify-between">
-                    <span className={isFlipped ? 'text-purple-300' : 'text-slate-400 dark:text-slate-500'}>
+                  <div className="text-xs pt-2.5 border-t border-black/10 dark:border-white/10 mt-2 flex items-center justify-between">
+                    <span className={isFlipped ? 'text-purple-200' : 'text-slate-500 dark:text-slate-400 font-medium'}>
                       {isFlipped ? '✓ Toca para volver a la pregunta' : '💡 ' + (card.hint || 'Toca para ver la respuesta')}
                     </span>
                   </div>
@@ -291,30 +291,30 @@ export const UnitView: React.FC<UnitViewProps> = ({
             <span className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
               Actividad Práctica Guiada
             </span>
-            <span className="text-xs px-3 py-1 bg-slate-800 dark:bg-slate-800 text-slate-300 rounded-full font-medium border border-slate-700">
-              Taller de Aplicación
+            <span className="text-xs px-3 py-1 bg-slate-800 dark:bg-slate-800 text-slate-200 rounded-full font-medium border border-slate-700">
+              Taller de Aplicación para Aprendices
             </span>
           </div>
 
           <h3 className="text-xl sm:text-2xl font-bold mb-2 text-white">
             {unit.practicalWorkshop.title}
           </h3>
-          <p className="text-xs sm:text-sm text-slate-300 mb-6 leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-200 mb-6 leading-relaxed">
             {unit.practicalWorkshop.description}
           </p>
 
           <div className="space-y-4 mb-6">
             {unit.practicalWorkshop.steps.map((st) => (
-              <div key={st.step} className="p-4 bg-slate-800/80 dark:bg-slate-800/60 border border-slate-700/80 rounded-2xl">
-                <div className="flex items-center gap-2 mb-1.5">
+              <div key={st.step} className="p-4.5 bg-slate-800/80 dark:bg-slate-800/60 border border-slate-700/80 rounded-2xl">
+                <div className="flex items-center gap-2.5 mb-1.5">
                   <span className="w-6 h-6 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center shrink-0">
                     {st.step}
                   </span>
-                  <h5 className="font-semibold text-sm text-white">{st.instruction}</h5>
+                  <h5 className="font-semibold text-sm sm:text-base text-white">{st.instruction}</h5>
                 </div>
-                <p className="text-xs text-slate-300 pl-8 leading-relaxed mb-2">{st.detail}</p>
+                <p className="text-xs sm:text-sm text-slate-200 pl-8.5 leading-relaxed mb-2">{st.detail}</p>
                 {st.expectedResult && (
-                  <p className="text-[11px] text-emerald-400 pl-8 font-mono">
+                  <p className="text-xs text-emerald-300 pl-8.5 font-mono">
                     ✓ Resultado esperado: {st.expectedResult}
                   </p>
                 )}
@@ -322,9 +322,9 @@ export const UnitView: React.FC<UnitViewProps> = ({
             ))}
           </div>
 
-          <div className="p-4 bg-slate-800/90 dark:bg-slate-800/90 border border-indigo-500/40 rounded-2xl text-xs flex items-center justify-between">
-            <span className="text-slate-300">
-              <strong>Entregable de la actividad:</strong> {unit.practicalWorkshop.deliverable}
+          <div className="p-4 bg-slate-800/90 dark:bg-slate-800/90 border border-indigo-500/40 rounded-2xl text-xs sm:text-sm flex items-center justify-between">
+            <span className="text-slate-200">
+              <strong>Evidencia entregable:</strong> {unit.practicalWorkshop.deliverable}
             </span>
           </div>
         </div>
@@ -336,9 +336,9 @@ export const UnitView: React.FC<UnitViewProps> = ({
           <BookOpen className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
           Cierre y Puntos Clave de Repaso
         </h4>
-        <ul className="space-y-2 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+        <ul className="space-y-2.5 text-sm sm:text-base text-slate-800 dark:text-slate-200">
           {unit.reviewSummary.map((item, idx) => (
-            <li key={idx} className="flex items-start gap-2">
+            <li key={idx} className="flex items-start gap-2.5">
               <span className="text-indigo-600 dark:text-indigo-400 font-bold">•</span>
               <span>{item}</span>
             </li>
@@ -351,7 +351,7 @@ export const UnitView: React.FC<UnitViewProps> = ({
         <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800 mb-6">
           <div>
             <span className="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">Autoevaluación Formativa</span>
-            <h4 className="text-xl font-bold text-slate-900 dark:text-white">Cuestionario de Comprensión de la Unidad</h4>
+            <h4 className="text-xl font-bold text-slate-900 dark:text-white">Cuestionario de Comprensión para el Aprendiz</h4>
           </div>
           {showQuizResults && (
             <div className="text-right">
@@ -370,25 +370,25 @@ export const UnitView: React.FC<UnitViewProps> = ({
 
             return (
               <div key={q.id} className="p-5 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200 dark:border-slate-700">
-                <p className="text-sm font-semibold text-slate-900 dark:text-white mb-3">
+                <p className="text-sm sm:text-base font-semibold text-slate-900 dark:text-white mb-3">
                   {qIndex + 1}. {q.question}
                 </p>
 
-                <div className="space-y-2">
+                <div className="space-y-2.5">
                   {q.options.map((opt, optIndex) => {
                     const isSelected = chosen === optIndex;
-                    let btnStyle = 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700';
+                    let btnStyle = 'bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700';
 
                     if (showQuizResults) {
                       if (optIndex === q.correctAnswer) {
-                        btnStyle = 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-500 dark:border-emerald-600 text-emerald-900 dark:text-emerald-200 font-medium';
+                        btnStyle = 'bg-emerald-100 dark:bg-emerald-950/70 border-emerald-500 dark:border-emerald-600 text-emerald-900 dark:text-emerald-100 font-semibold';
                       } else if (isSelected) {
-                        btnStyle = 'bg-rose-100 dark:bg-rose-950/70 border-rose-500 dark:border-rose-600 text-rose-900 dark:text-rose-200';
+                        btnStyle = 'bg-rose-100 dark:bg-rose-950/70 border-rose-500 dark:border-rose-600 text-rose-900 dark:text-rose-100';
                       } else {
-                        btnStyle = 'bg-white/50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 text-slate-400 dark:text-slate-500 opacity-60';
+                        btnStyle = 'bg-white/50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 opacity-60';
                       }
                     } else if (isSelected) {
-                      btnStyle = 'bg-indigo-50 dark:bg-indigo-950/80 border-indigo-600 dark:border-indigo-500 text-indigo-900 dark:text-indigo-200 font-medium';
+                      btnStyle = 'bg-indigo-50 dark:bg-indigo-950/80 border-indigo-600 dark:border-indigo-500 text-indigo-950 dark:text-indigo-200 font-semibold';
                     }
 
                     return (
@@ -396,9 +396,9 @@ export const UnitView: React.FC<UnitViewProps> = ({
                         key={optIndex}
                         onClick={() => handleSelectAnswer(q.id, optIndex)}
                         disabled={showQuizResults}
-                        className={`w-full text-left p-3 rounded-xl border text-xs sm:text-sm transition-all flex items-start gap-2.5 ${btnStyle}`}
+                        className={`w-full text-left p-3.5 rounded-xl border text-xs sm:text-sm transition-all flex items-start gap-2.5 cursor-pointer ${btnStyle}`}
                       >
-                        <span className="w-5 h-5 rounded-full border border-slate-400 dark:border-slate-500 text-[10px] font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        <span className="w-5 h-5 rounded-full border border-slate-400 dark:border-slate-500 text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
                           {String.fromCharCode(65 + optIndex)}
                         </span>
                         <span className="flex-1">{opt}</span>

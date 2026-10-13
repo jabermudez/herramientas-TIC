@@ -12,28 +12,28 @@ interface PresetPrompt {
 
 const PRESETS: PresetPrompt[] = [
   {
-    name: 'Docente: Examen TIC Básico',
-    rol: 'Profesor de Tecnologías de la Información y la Comunicación con 10 años de experiencia didáctica.',
-    contexto: 'Mis alumnos son jóvenes de primer ingreso y estamos evaluando los conceptos de hardware y periféricos.',
-    tarea: 'Diseña una rúbrica de autoevaluación con 4 preguntas de opción múltiple con situaciones de la vida real.',
-    formato: 'Presenta cada pregunta numerada, 4 opciones (A, B, C, D), indica la respuesta correcta y redacta una breve justificación pedagógica.',
-    restricciones: 'No uses tecnicismos oscuros y limita la longitud a un máximo de 350 palabras.'
+    name: 'Aprendiz: Preparación para Evaluación',
+    rol: 'Tutor técnico TIC con paciencia pedagógica y ejemplos claros.',
+    contexto: 'Soy un aprendiz que está comenzando a estudiar hardware y componentes de computadores.',
+    tarea: 'Diseña un cuestionario de repaso con 4 preguntas prácticas de opción múltiple basadas en casos de la vida real.',
+    formato: 'Presenta cada pregunta numerada, 4 opciones (A, B, C, D), indica la respuesta correcta y redacta una breve explicación comprensible.',
+    restricciones: 'Usa lenguaje sencillo sin tecnicismos excesivos y limita la longitud a un máximo de 350 palabras.'
   },
   {
-    name: 'Asistente de Oficina: Correo Formal',
-    rol: 'Especialista en comunicación corporativa y redacción ejecutiva.',
-    contexto: 'Trabajo en el área administrativa de una institución educativa y debo recordar la fecha límite de entrega de calificaciones.',
-    tarea: 'Redacta un correo electrónico cordial pero firme dirigido al personal docente.',
-    formato: 'Incluye Asunto, Saludo protocolario, Cuerpo en 2 párrafos concisos, Llamado a la acción con fecha resaltada y Despedida formal.',
-    restricciones: 'Tono respetuoso y empático, sin palabras agresivas, máximo 180 palabras.'
+    name: 'Aprendiz: Redacción de Correo Formal',
+    rol: 'Especialista en comunicación formal y redacción institucional.',
+    contexto: 'Soy un aprendiz que necesita justificar formalmente un permiso o solicitar una revisión de evidencia ante la coordinación.',
+    tarea: 'Redacta una plantilla de correo electrónico formal, respetuosa y profesional.',
+    formato: 'Incluye Asunto claro, Saludo formal, Cuerpo en 2 párrafos concisos, Llamado a la acción con datos clave resaltados y Despedida institucional.',
+    restricciones: 'Tono educado y profesional, sin palabras informales, máximo 180 palabras.'
   },
   {
-    name: 'Estudiante: Resumen de Ciberseguridad',
-    rol: 'Tutor pedagógico experto en seguridad informática y prevención de fraudes.',
-    contexto: 'Estoy estudiando para mi primer curso de TIC y me cuesta diferenciar entre Phishing y Malware.',
-    tarea: 'Explica ambos conceptos utilizando analogías con la vida cotidiana en una casa común.',
+    name: 'Aprendiz: Resumen de Ciberseguridad',
+    rol: 'Tutor pedagógico experto en seguridad digital y prevención de fraudes.',
+    contexto: 'Soy un aprendiz que necesita dominar la diferencia práctica entre Phishing y Malware para proteger mis cuentas y equipos.',
+    tarea: 'Explica ambos conceptos utilizando analogías con la vida cotidiana en una vivienda común.',
     formato: 'Crea una tabla comparativa de 3 columnas: Concepto, Analogía Cotidiana y Cómo Protegerse.',
-    restricciones: 'Usa lenguaje sencillo para principiantes, sin jerga de redes compleja.'
+    restricciones: 'Usa lenguaje claro para aprendices, sin jerga de redes compleja.'
   }
 ];
 
@@ -94,7 +94,7 @@ export const PromptCraftSandbox: React.FC = () => {
         {/* Left: Input blocks */}
         <div className="space-y-3">
           <div>
-            <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 mb-1">
+            <label className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5 mb-1.5">
               <span className="w-5 h-5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-800 dark:text-purple-300 text-[11px] font-bold flex items-center justify-center">R</span>
               1. Rol (Identidad y especialidad de la IA)
             </label>
@@ -102,27 +102,27 @@ export const PromptCraftSandbox: React.FC = () => {
               value={rol}
               onChange={(e) => setRol(e.target.value)}
               rows={2}
-              className="w-full p-2.5 text-xs border border-slate-300 dark:border-slate-700 rounded-xl focus:border-purple-500 focus:ring-1 focus:ring-purple-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
-              placeholder="Ej. Actúa como docente de informática con paciencia y ejemplos cotidianos..."
+              className="w-full p-3 text-xs sm:text-sm border border-slate-300 dark:border-slate-700 rounded-xl focus:border-purple-500 focus:ring-1 focus:ring-purple-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+              placeholder="Ej. Actúa como tutor experto en ofimática con explicaciones paso a paso..."
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 mb-1">
+            <label className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5 mb-1.5">
               <span className="w-5 h-5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 text-[11px] font-bold flex items-center justify-center">C</span>
-              2. Contexto (Situación y audiencia objetivo)
+              2. Contexto (Tu situación y nivel como aprendiz)
             </label>
             <textarea
               value={contexto}
               onChange={(e) => setContexto(e.target.value)}
               rows={2}
-              className="w-full p-2.5 text-xs border border-slate-300 dark:border-slate-700 rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
-              placeholder="Ej. Mis estudiantes están aprendiendo por primera vez a usar una computadora..."
+              className="w-full p-3 text-xs sm:text-sm border border-slate-300 dark:border-slate-700 rounded-xl focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 bg-white dark:bg-slate-800 text-slate-900 dark:text-white"
+              placeholder="Ej. Soy un aprendiz en etapa lectiva aprendiendo a estructurar fórmulas en Excel..."
             />
           </div>
 
           <div>
-            <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 mb-1">
+            <label className="text-xs sm:text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5 mb-1.5">
               <span className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-[11px] font-bold flex items-center justify-center">T</span>
               3. Tarea (Acción concreta y verbo principal)
             </label>

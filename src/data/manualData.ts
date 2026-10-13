@@ -5,11 +5,11 @@ import mobileImage from '../assets/images/ecosistema_movil_cloud_1791911809547.j
 
 export const MANUAL_METADATA = {
   courseTitle: 'Manual de Herramientas TIC',
-  subtitle: 'Guía Integral de Alfabetización y Productividad Digital: De Básico a Intermedio',
+  subtitle: 'Guía Integral de Alfabetización y Productividad Digital para Aprendices',
   institution: 'Servicios TIC & Formación Pedagógica Digital',
   authorRole: 'Autor Técnico y Pedagógico TIC',
   year: '2026',
-  targetAudience: 'Estudiantes, docentes y profesionales en transición digital (Nivel Básico a Intermedio)',
+  targetAudience: 'Aprendices en formación técnica, laboral y ciudadana digital (Nivel Básico a Intermedio)',
   heroImage,
   hardwareImage,
   mobileImage
@@ -59,7 +59,7 @@ export const UNITS_DATA: Unit[] = [
         title: '1.1 ¿Qué son las TIC y por qué transforman nuestro entorno?',
         content: `Las Tecnologías de la Información y la Comunicación (TIC) son el conjunto convergente de recursos, herramientas, dispositivos electrónicos, redes de transmisión y programas informáticos que permiten compilar, procesar, almacenar, transmitir y recuperar información en cualquier soporte: texto, sonido, imagen y video.
 
-Lejos de ser únicamente "computadoras y teléfonos", las TIC constituyen el tejido conectivo de la sociedad moderna. Permiten que un trámite que antes requería tres días hábiles y traslados físicos se resuelva en segundos desde una aplicación gubernamental, que un docente comparta conocimientos con personas en diferentes latitudes de forma sincrónica, y que pequeños emprendedores comercialicen sus creaciones a escala internacional.`,
+Lejos de ser únicamente "computadoras y teléfonos", las TIC constituyen el tejido conectivo del entorno formativo y laboral actual. Permiten que un trámite que antes requería tres días hábiles y traslados físicos se resuelva en segundos desde una aplicación digital, que los aprendices compartan evidencias y proyectos de equipo desde cualquier lugar de forma sincrónica, y que emprendedores comercialicen sus creaciones a escala internacional.`,
         analogy: {
           concept: 'El impacto de las TIC',
           comparison: 'El sistema circulatorio del cuerpo humano',
@@ -878,16 +878,16 @@ Debido a esto, la IA puede redactar un poema conmovedor o explicar la fotosínte
         content: `Un **Prompt** es la instrucción, pregunta o petición que el usuario escribe a la inteligencia artificial. La calidad de la respuesta depende directamente de la claridad y precisión de tu prompt (*"Entra basura, sale basura"*).
 
 ### Comparativa: Prompt Pobre vs. Prompt Profesional:
-- ❌ **Prompt pobre y vago:** *"Escríbeme algo sobre las plantas para mi clase."*
-  - *Resultado:* Texto genérico, quizás infantil o excesivamente técnico, sin saber a qué nivel apuntar.
+- ❌ **Prompt pobre y vago:** *"Escríbeme algo sobre redes de computadores para mi evidencia."*
+  - *Resultado:* Texto genérico, quizás superficial o excesivamente denso, sin saber a qué objetivo apuntar.
 - ✅ **Prompt con estructura R-C-T-F-R:**
-  - **R (Rol):** "Actúa como un profesor de ciencias naturales de educación secundaria."
-  - **C (Contexto):** "Mis alumnos tienen entre 12 y 13 años y estamos iniciando la unidad de botánica en clima templado."
-  - **T (Tarea):** "Explica el proceso de la fotosíntesis mediante una analogía con una fábrica de cocina."
-  - **F (Formato):** "Presenta la respuesta en 3 secciones cortas con viñetas y un glosario final de 4 términos clave."
-  - **R (Restricciones):** "No uses más de 300 palabras y evita jerga bioquímica compleja."
+  - **R (Rol):** "Actúa como un especialista en soporte técnico y redes de datos."
+  - **C (Contexto):** "Soy un aprendiz preparando un informe práctico sobre cableado estructurado y puertos Ethernet."
+  - **T (Tarea):** "Explica la diferencia entre un cable directo y uno cruzado, y cuándo se utiliza cada uno en un entorno de oficina."
+  - **F (Formato):** "Presenta la respuesta en 3 secciones cortas con viñetas y una tabla resumen de 2 columnas."
+  - **R (Restricciones):** "No uses más de 250 palabras y enfócate en aplicaciones prácticas de trabajo."
 
-Al aplicar esta fórmula, la IA ajusta su tono, profundidad y vocabulario a tu necesidad exacta.`,
+Al aplicar esta fórmula, la IA ajusta su tono, profundidad y vocabulario a tu necesidad exacta como aprendiz.`,
         callouts: [
           {
             type: 'tip',
@@ -973,7 +973,7 @@ Usar la IA como tutora para entender un concepto difícil, generar ideas de lluv
           'Ruta de guardado en el disco'
         ],
         correctAnswer: 1,
-        explanation: 'El Rol le asigna a la IA una perspectiva experta concreta (ej. "Actúa como docente de secundaria", "Actúa como auditor contable"), afinando su vocabulario y enfoque.'
+        explanation: 'El Rol le asigna a la IA una perspectiva experta concreta (ej. "Actúa como especialista en ciberseguridad", "Actúa como auditor contable"), afinando su vocabulario y enfoque.'
       },
       {
         id: 'q5-3',

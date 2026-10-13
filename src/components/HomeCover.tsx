@@ -36,16 +36,16 @@ export const HomeCover: React.FC<HomeCoverProps> = ({
                 {MANUAL_METADATA.courseTitle}
               </h1>
 
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-6">
-                Guía integral y progresiva de herramientas tecnológicas digitales. Desde la arquitectura de hardware y ofimática analítica hasta productividad móvil, prompting responsable de Inteligencia Artificial y ciberseguridad cotidiana.
+              <p className="text-base sm:text-lg text-slate-200 leading-relaxed mb-6 font-normal">
+                Manual diseñado exclusivamente para aprendices en formación. Una ruta guiada desde el hardware físico y la ofimática analítica hasta la productividad móvil, prompting ético de Inteligencia Artificial y ciberseguridad práctica.
               </p>
 
-              <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mb-8">
-                <span>6 Unidades Temáticas</span>
+              <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-300 mb-8 font-medium">
+                <span>{units.length} Unidades Temáticas</span>
                 <span aria-hidden="true">·</span>
                 <span>Laboratorios Interactivos</span>
                 <span aria-hidden="true">·</span>
-                <span>Voz en Vivo (gemini-3.8-live)</span>
+                <span>Tutor de Voz Integrado</span>
               </div>
             </div>
 

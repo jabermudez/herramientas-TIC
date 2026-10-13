@@ -39,7 +39,7 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
     window.location.protocol === 'file:'
   );
 
-  const [tutorMode, setTutorMode] = useState<TutorMode>(isStaticHosting ? 'web-voice' : 'gemini-live');
+  const [tutorMode, setTutorMode] = useState<TutorMode>('web-voice');
   const [isConnected, setIsConnected] = useState<boolean>(false);
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isSpeaking, setIsSpeaking] = useState<boolean>(false);
@@ -47,9 +47,7 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
   const [micInterimText, setMicInterimText] = useState<string>('');
   const [typedInput, setTypedInput] = useState<string>('');
   const [statusMessage, setStatusMessage] = useState<string>(
-    isStaticHosting
-      ? 'Modo Web activo: Compatible con GitHub Pages'
-      : 'Listo para conectar con el Tutor'
+    'Tutor de Voz activo: pulsa el micrófono o escribe tu duda'
   );
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [permissionError, setPermissionError] = useState<boolean>(false);
@@ -181,7 +179,7 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
     }
   };
 
-  // --- WEB SPEECH RECOGNITION (Compatible with GitHub Pages & All Browsers) ---
+  // --- WEB SPEECH RECOGNITION (Compatible with All Browsers & Devices) ---
   const toggleWebVoiceRecording = () => {
     setErrorMessage(null);
     setPermissionError(false);
@@ -279,8 +277,8 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
     }
   };
 
-  // Process user question in Web Mode using Knowledge Base & TTS
-  const processStudentQuery = (userText: string) => {
+  // Process user question using Server Gemini AI or Autonomous TIC Knowledge Engine + TTS
+  const processStudentQuery = async (userText: string) => {
     if (!userText.trim()) return;
 
     // 1. Add student message
@@ -292,25 +290,49 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
     };
 
     setMessages(prev => [...prev, userMsg]);
-    setStatusMessage('Procesando respuesta pedagógica...');
+    setStatusMessage('Consultando al Tutor pedagógico...');
 
-    // 2. Query TIC Knowledge Engine
-    const result = queryTicKnowledgeBase(userText);
+    let answerText = '';
+    let recUnit: string | undefined = undefined;
 
-    setTimeout(() => {
-      const tutorMsg: MessageItem = {
-        sender: 'tutor',
-        text: result.answer,
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        unitRecommendation: result.recommendedUnit
-      };
+    // 2. Intentar primero con la API de servidor (Gemini 3.8 Flash)
+    try {
+      const res = await fetch('/api/tutor-ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: userText })
+      });
 
-      setMessages(prev => [...prev, tutorMsg]);
-      setStatusMessage('Respuesta lista');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.answer && !data.useLocalFallback) {
+          answerText = data.answer;
+          recUnit = data.unitRecommendation;
+        }
+      }
+    } catch (e) {
+      // Entorno offline o sin servidor activo; pasará directamente al motor autónomo
+    }
 
-      // 3. Speak the answer aloud
-      speakTextWithBrowserSynth(result.answer);
-    }, 350);
+    // 3. Si no respondió el servidor o está offline, consultar el motor autónomo exhaustivo del manual
+    if (!answerText) {
+      const result = queryTicKnowledgeBase(userText);
+      answerText = result.answer;
+      recUnit = result.recommendedUnit;
+    }
+
+    const tutorMsg: MessageItem = {
+      sender: 'tutor',
+      text: answerText,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      unitRecommendation: recUnit
+    };
+
+    setMessages(prev => [...prev, tutorMsg]);
+    setStatusMessage('Respuesta lista');
+
+    // 4. Reproducir la respuesta en voz alta con síntesis natural
+    speakTextWithBrowserSynth(answerText);
   };
 
   // --- GEMINI 3.8 LIVE (WebSockets Backend Bridge) ---
@@ -392,7 +414,7 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
       ws.onerror = () => {
         clearTimeout(connectionTimeout);
         handleFallbackToWebMode(
-          'Servidor WebSocket no disponible en este entorno estático (GitHub Pages). Se activó el Tutor de Voz Web nativo para que puedas hablar sin interrupciones.'
+          'Servidor en la nube no disponible. Se activó el Tutor de Voz Web autónomo para que puedas hablar sin interrupciones.'
         );
       };
 
@@ -406,11 +428,11 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
     }
   };
 
-  // Gracefully fallback to Web mode if WebSocket fails (e.g. on GitHub Pages)
+  // Gracefully fallback to Web mode if WebSocket fails
   const handleFallbackToWebMode = (reason: string) => {
     stopAllAudio();
     setTutorMode('web-voice');
-    setStatusMessage('Modo Web activado (Compatible con GitHub Pages)');
+    setStatusMessage('Modo Autónomo Web activado');
     setErrorMessage(reason);
   };
 
@@ -575,7 +597,7 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
                 stopAllAudio();
                 setTutorMode('web-voice');
                 setErrorMessage(null);
-                setStatusMessage('Modo Web activado (100% compatible con GitHub Pages)');
+                setStatusMessage('Modo Autónomo Web activado');
               }}
               className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition-all cursor-pointer flex items-center gap-1 ${
                 tutorMode === 'web-voice'
@@ -584,7 +606,7 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
               }`}
             >
               <Globe className="w-3 h-3" />
-              <span>Voz Web (GitHub Pages)</span>
+              <span>Voz Web (Autónomo)</span>
             </button>
 
             <button
@@ -768,7 +790,7 @@ export const VoiceTutorModal: React.FC<VoiceTutorModalProps> = ({ isOpen, onClos
         <div className="p-3 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
           <span className="text-[11px] truncate">
             {tutorMode === 'web-voice'
-              ? '✓ Compatible con navegadores web, celulares y GitHub Pages.'
+              ? '✓ Compatible con navegadores modernos y dispositivos móviles sin requerir servidor.'
               : 'Sesión en vivo mediante streaming de audio y WebSockets.'}
           </span>
           <button

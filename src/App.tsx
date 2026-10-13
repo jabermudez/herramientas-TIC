@@ -126,6 +126,12 @@ export default function App() {
     window.print();
   };
 
+  // State for collapsible units sidebar
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(() => {
+    // Default open on wide desktop, closed on mobile/tablet to avoid taking space
+    return typeof window !== 'undefined' ? window.innerWidth >= 1280 : false;
+  });
+
   const completedCount = Object.values(completedUnits).filter(Boolean).length;
 
   return (
@@ -149,11 +155,13 @@ export default function App() {
         onSelectUnit={handleSelectUnit}
         onSelectSection={handleSelectSection}
         onSelectWorkshop={handleSelectWorkshop}
+        isSidebarOpen={isSidebarOpen}
+        onToggleSidebar={() => setIsSidebarOpen(prev => !prev)}
       />
 
       {/* Main Layout Body */}
-      <div className="flex-1 flex flex-col lg:flex-row max-w-7xl w-full mx-auto">
-        {/* Left Navigation Sidebar */}
+      <div className="flex-1 flex max-w-7xl w-full mx-auto relative">
+        {/* Left Navigation Sidebar (Collapsible) */}
         <Sidebar
           units={UNITS_DATA}
           activeUnitId={activeUnitId}
@@ -170,10 +178,27 @@ export default function App() {
             setActiveView('talleres-practicos');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen(prev => !prev)}
         />
 
         {/* Dynamic Center Canvas */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 min-w-0 transition-all">
+          {/* Quick toggle indicator banner when sidebar is closed on desktop */}
+          {!isSidebarOpen && activeView === 'unidades' && (
+            <div className="mb-4 flex items-center justify-between p-3 bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 rounded-xl text-xs sm:text-sm text-indigo-950 dark:text-indigo-200">
+              <span className="font-medium">
+                Viendo: <strong className="font-bold">{currentUnit.title}</strong>
+              </span>
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className="px-3 py-1 bg-white dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-700 rounded-lg font-semibold hover:bg-indigo-50 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+              >
+                Abrir Índice de Unidades
+              </button>
+            </div>
+          )}
+
           {activeView === 'portada' && (
             <HomeCover
               units={UNITS_DATA}
@@ -209,15 +234,17 @@ export default function App() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 px-4 sm:px-6 text-center text-xs text-slate-500 dark:text-slate-400 no-print transition-colors">
+      <footer className="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 px-4 sm:px-6 text-center text-xs text-slate-600 dark:text-slate-400 no-print transition-colors">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <p>
-            Manual de Herramientas TIC · Guía pedagógica e interactiva de nivel básico a intermedio.
+            Manual de Herramientas TIC · Guía pedagógica e interactiva para aprendices (Nivel Básico a Intermedio).
           </p>
-          <div className="flex items-center gap-4 text-slate-400 dark:text-slate-500">
-            <span>Listo para exportar a GitHub Pages</span>
+          <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400">
+            <span>Orientado 100% a la práctica formativa</span>
             <span>·</span>
-            <span>Impresión amigable PDF</span>
+            <span>Compatible con celulares y computadores</span>
+            <span>·</span>
+            <span>Impresión / PDF</span>
           </div>
         </div>
       </footer>

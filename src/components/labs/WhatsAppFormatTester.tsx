@@ -187,8 +187,8 @@ export const WhatsAppFormatTester: React.FC = () => {
                 </div>
               </div>
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-2 text-center">
-              Así es como tus alumnos o colegas verán el mensaje formateado en sus pantallas de WhatsApp.
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2 text-center">
+              Así es como tus compañeros de equipo o contactos laborales verán el mensaje con formato en WhatsApp.
             </p>
           </div>
         </div>
@@ -201,24 +201,24 @@ export const WhatsAppFormatTester: React.FC = () => {
               <Users className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
               <h5 className="font-bold text-slate-900 dark:text-white text-sm">Grupo de WhatsApp</h5>
             </div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 mb-3 leading-relaxed">
-              Espacio comunitario donde todos los miembros ven la lista completa de integrantes y pueden escribir (salvo que sea configurado como solo administradores).
+            <p className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 mb-3 leading-relaxed">
+              Espacio grupal donde todos los miembros ven la lista completa de integrantes y pueden escribir (salvo que sea configurado como solo administradores).
             </p>
-            <div className="space-y-1.5 text-xs">
-              <p className="text-emerald-700 dark:text-emerald-400 font-medium">✓ Cuándo usarlo: Proyectos de equipo, debates de aula, coordinación colaborativa.</p>
-              <p className="text-rose-700 dark:text-rose-400 font-medium">✕ Riesgos: Pérdida de privacidad (cualquiera ve los teléfonos ajenos) y saturación con cientos de mensajes.</p>
+            <div className="space-y-1.5 text-xs sm:text-sm">
+              <p className="text-emerald-700 dark:text-emerald-400 font-medium">✓ Cuándo usarlo: Proyectos de equipo, trabajo colaborativo entre aprendices.</p>
+              <p className="text-rose-700 dark:text-rose-400 font-medium">✕ Riesgos: Pérdida de privacidad (cualquiera ve tu número de celular) y saturación con cientos de mensajes.</p>
             </div>
           </div>
 
           <div className="p-4 bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 rounded-xl">
             <div className="flex items-center gap-2 mb-2">
               <Send className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
-              <h5 className="font-bold text-emerald-950 dark:text-emerald-200 text-sm">Lista de Difusión (Recomendado para Docentes)</h5>
+              <h5 className="font-bold text-emerald-950 dark:text-emerald-200 text-sm">Lista de Difusión (Recomendado para Comunicados Formales)</h5>
             </div>
-            <p className="text-xs text-emerald-900 dark:text-emerald-200/90 mb-3 leading-relaxed">
+            <p className="text-xs sm:text-sm text-emerald-900 dark:text-emerald-200/90 mb-3 leading-relaxed">
               Envías un mismo comunicado a hasta 256 personas simultáneamente. A cada receptor le llega como un mensaje privado 1 a 1 de tu parte.
             </p>
-            <div className="space-y-1.5 text-xs">
+            <div className="space-y-1.5 text-xs sm:text-sm">
               <p className="text-emerald-800 dark:text-emerald-300 font-medium">✓ Ventaja total: Los destinatarios NO ven quién más recibió el mensaje ni conocen sus números telefónicos.</p>
               <p className="text-slate-700 dark:text-slate-300 font-medium">ℹ Condición clave: El contacto debe tener guardado tu número telefónico en su agenda para recibir la difusión.</p>
             </div>

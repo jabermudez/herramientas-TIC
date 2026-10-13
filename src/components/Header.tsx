@@ -17,6 +17,8 @@ interface HeaderProps {
   onSelectUnit: (unitId: string) => void;
   onSelectSection: (unitId: string, sectionId: string) => void;
   onSelectWorkshop: (workshopId: string) => void;
+  isSidebarOpen?: boolean;
+  onToggleSidebar?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -34,6 +36,8 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectUnit,
   onSelectSection,
   onSelectWorkshop,
+  isSidebarOpen = true,
+  onToggleSidebar,
 }) => {
   const percentage = totalUnitsCount > 0 ? Math.round((completedUnitsCount / totalUnitsCount) * 100) : 0;
   const isAllCompleted = percentage === 100;
@@ -47,15 +51,31 @@ export const Header: React.FC<HeaderProps> = ({
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
       {/* Universal Top Bar Contract: 3 zones separated by gap-4 to gap-6 */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3 sm:gap-6">
-        {/* Zone 1: Brand wordmark (single line, no pill badges) */}
-        <button
-          onClick={() => setActiveView('portada')}
-          className="text-left font-bold text-base sm:text-lg text-slate-900 dark:text-white tracking-tight whitespace-nowrap shrink-0 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2"
-        >
-          <BookOpen className="w-5 h-5 text-indigo-600 dark:text-indigo-400 shrink-0" />
-          <span className="hidden sm:inline">Manual de Herramientas TIC</span>
-          <span className="sm:hidden font-extrabold">Manual TIC</span>
-        </button>
+        {/* Zone 1: Sidebar Toggle + Brand wordmark */}
+        <div className="flex items-center gap-2 shrink-0">
+          {onToggleSidebar && (
+            <button
+              onClick={onToggleSidebar}
+              title={isSidebarOpen ? "Ocultar panel lateral de unidades" : "Mostrar panel lateral de unidades"}
+              aria-label={isSidebarOpen ? "Ocultar menú lateral" : "Mostrar menú lateral"}
+              className={`p-2 rounded-xl border transition-all cursor-pointer flex items-center justify-center ${
+                isSidebarOpen
+                  ? 'bg-indigo-50 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800'
+                  : 'bg-slate-50 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-700'
+              }`}
+            >
+              <BookOpen className="w-4 h-4" />
+            </button>
+          )}
+
+          <button
+            onClick={() => setActiveView('portada')}
+            className="text-left font-bold text-base sm:text-lg text-slate-900 dark:text-white tracking-tight whitespace-nowrap shrink-0 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2 cursor-pointer"
+          >
+            <span className="hidden sm:inline">Manual de Herramientas TIC</span>
+            <span className="sm:hidden font-extrabold">Manual TIC</span>
+          </button>
+        </div>
 
         {/* Global Search Bar (prominent & accessible across all devices) */}
         <div className="flex-1 max-w-xs sm:max-w-sm md:max-w-md mx-1 sm:mx-2">
