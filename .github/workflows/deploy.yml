@@ -33,11 +33,14 @@ jobs:
       - name: Instalar dependencias
         run: npm ci || npm install --legacy-peer-deps
 
+      - name: Configurar GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v4
+
       - name: Compilar aplicación (Vite Build)
         run: npm run build
-
-      - name: Configurar GitHub Pages
-        uses: actions/configure-pages@v4
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_path }}
 
       - name: Subir artefacto compilado
         uses: actions/upload-pages-artifact@v3

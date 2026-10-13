@@ -9,7 +9,7 @@ export const GithubPagesDeployGuide: React.FC = () => {
 
 on:
   push:
-    branches: [ main ]
+    branches: [ 'main', 'master' ]
   workflow_dispatch:
 
 permissions:
@@ -22,36 +22,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build-and-deploy:
     environment:
       name: github-pages
       url: \${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout código fuente
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
       - name: Instalar dependencias
-        run: npm ci
+        run: npm ci || npm install --legacy-peer-deps
 
-      - name: Construir proyecto Vite
-        run: npm run build
-
-      - name: Configurar Pages
+      - name: Configurar GitHub Pages
+        id: pages
         uses: actions/configure-pages@v4
+
+      - name: Compilar aplicación (Vite Build)
+        run: npm run build
+        env:
+          BASE_URL: \${{ steps.pages.outputs.base_path }}
 
       - name: Subir artefacto compilado
         uses: actions/upload-pages-artifact@v3
         with:
           path: './dist'
 
-      - name: Desplegar en GitHub Pages
+      - name: Desplegar a GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4`;
 
