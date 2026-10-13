@@ -45,6 +45,7 @@ export default function App() {
   };
 
   const [isGlossaryOpen, setIsGlossaryOpen] = useState<boolean>(false);
+  const [glossaryInitialTerm, setGlossaryInitialTerm] = useState<string>('');
   const [isVoiceTutorOpen, setIsVoiceTutorOpen] = useState<boolean>(false);
 
   // LocalStorage persistence for student completion
@@ -81,6 +82,30 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleSelectSection = (unitId: string, sectionId: string) => {
+    setActiveUnitId(unitId);
+    setActiveView('unidades');
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 120);
+  };
+
+  const handleSelectWorkshop = (workshopId: string) => {
+    setActiveWorkshop(workshopId);
+    setActiveView('talleres-practicos');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenGlossary = (initialTerm?: string) => {
+    setGlossaryInitialTerm(initialTerm || '');
+    setIsGlossaryOpen(true);
+  };
+
   const handleNextUnit = () => {
     if (currentUnitIndex < UNITS_DATA.length - 1) {
       const nextId = UNITS_DATA[currentUnitIndex + 1].id;
@@ -107,7 +132,7 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
       {/* Universal Top Header */}
       <Header
-        onOpenGlossary={() => setIsGlossaryOpen(true)}
+        onOpenGlossary={handleOpenGlossary}
         onOpenVoiceTutor={() => setIsVoiceTutorOpen(true)}
         onPrint={handlePrint}
         completedUnitsCount={completedCount}
@@ -121,6 +146,9 @@ export default function App() {
         setFontSize={setFontSize}
         theme={theme}
         onToggleTheme={toggleTheme}
+        onSelectUnit={handleSelectUnit}
+        onSelectSection={handleSelectSection}
+        onSelectWorkshop={handleSelectWorkshop}
       />
 
       {/* Main Layout Body */}
@@ -198,6 +226,7 @@ export default function App() {
       <GlossaryModal
         isOpen={isGlossaryOpen}
         onClose={() => setIsGlossaryOpen(false)}
+        initialSearchTerm={glossaryInitialTerm}
       />
 
       <VoiceTutorModal

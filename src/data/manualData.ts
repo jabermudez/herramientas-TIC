@@ -1,4 +1,7 @@
 import { Unit, ShortcutItem, GlossaryTerm } from '../types/manual';
+import heroImage from '../assets/images/manual_tic_hero_1791911809320.jpg';
+import hardwareImage from '../assets/images/hardware_pc_diagram_1791911809797.jpg';
+import mobileImage from '../assets/images/ecosistema_movil_cloud_1791911809547.jpg';
 
 export const MANUAL_METADATA = {
   courseTitle: 'Manual de Herramientas TIC',
@@ -7,9 +10,9 @@ export const MANUAL_METADATA = {
   authorRole: 'Autor Técnico y Pedagógico TIC',
   year: '2026',
   targetAudience: 'Estudiantes, docentes y profesionales en transición digital (Nivel Básico a Intermedio)',
-  heroImage: '/src/assets/images/manual_tic_hero_1791911809320.jpg',
-  hardwareImage: '/src/assets/images/hardware_pc_diagram_1791911809797.jpg',
-  mobileImage: '/src/assets/images/ecosistema_movil_cloud_1791911809547.jpg'
+  heroImage,
+  hardwareImage,
+  mobileImage
 };
 
 export const UNITS_DATA: Unit[] = [

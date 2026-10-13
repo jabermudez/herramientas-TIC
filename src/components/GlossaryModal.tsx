@@ -5,11 +5,18 @@ import { GLOSSARY_TERMS } from '../data/manualData';
 interface GlossaryModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialSearchTerm?: string;
 }
 
-export const GlossaryModal: React.FC<GlossaryModalProps> = ({ isOpen, onClose }) => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+export const GlossaryModal: React.FC<GlossaryModalProps> = ({ isOpen, onClose, initialSearchTerm = '' }) => {
+  const [searchTerm, setSearchTerm] = useState<string>(initialSearchTerm);
   const [selectedCat, setSelectedCat] = useState<string>('todos');
+
+  React.useEffect(() => {
+    if (isOpen) {
+      setSearchTerm(initialSearchTerm);
+    }
+  }, [isOpen, initialSearchTerm]);
 
   if (!isOpen) return null;
 

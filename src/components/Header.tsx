@@ -1,8 +1,9 @@
 import React from 'react';
 import { BookOpen, Printer, HelpCircle, Check, Radio, Sun, Moon } from 'lucide-react';
+import { SearchBar } from './SearchBar';
 
 interface HeaderProps {
-  onOpenGlossary: () => void;
+  onOpenGlossary: (initialTerm?: string) => void;
   onOpenVoiceTutor: () => void;
   onPrint: () => void;
   completedUnitsCount: number;
@@ -13,6 +14,9 @@ interface HeaderProps {
   setFontSize: (size: 'normal' | 'large') => void;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
+  onSelectUnit: (unitId: string) => void;
+  onSelectSection: (unitId: string, sectionId: string) => void;
+  onSelectWorkshop: (workshopId: string) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -26,7 +30,10 @@ export const Header: React.FC<HeaderProps> = ({
   fontSize,
   setFontSize,
   theme,
-  onToggleTheme
+  onToggleTheme,
+  onSelectUnit,
+  onSelectSection,
+  onSelectWorkshop,
 }) => {
   const percentage = totalUnitsCount > 0 ? Math.round((completedUnitsCount / totalUnitsCount) * 100) : 0;
   const isAllCompleted = percentage === 100;
@@ -38,54 +45,65 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-colors">
-      {/* Universal Top Bar Contract: 3 zones separated by gap-8 */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-8">
+      {/* Universal Top Bar Contract: 3 zones separated by gap-4 to gap-6 */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-3 sm:gap-6">
         {/* Zone 1: Brand wordmark (single line, no pill badges) */}
         <button
           onClick={() => setActiveView('portada')}
-          className="text-left font-bold text-lg text-slate-900 dark:text-white tracking-tight whitespace-nowrap shrink-0 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2"
+          className="text-left font-bold text-base sm:text-lg text-slate-900 dark:text-white tracking-tight whitespace-nowrap shrink-0 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-2"
         >
           <BookOpen className="w-5 h-5 text-indigo-600 dark:text-indigo-400 shrink-0" />
-          <span>Manual de Herramientas TIC</span>
+          <span className="hidden sm:inline">Manual de Herramientas TIC</span>
+          <span className="sm:hidden font-extrabold">Manual TIC</span>
         </button>
 
-        {/* Zone 2: 4 concise single-line text navigation links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+        {/* Global Search Bar (prominent & accessible across all devices) */}
+        <div className="flex-1 max-w-xs sm:max-w-sm md:max-w-md mx-1 sm:mx-2">
+          <SearchBar
+            onSelectUnit={onSelectUnit}
+            onSelectSection={onSelectSection}
+            onSelectGlossary={(term) => onOpenGlossary(term)}
+            onSelectWorkshop={onSelectWorkshop}
+          />
+        </div>
+
+        {/* Zone 2: Navigation links on large desktop */}
+        <nav className="hidden xl:flex items-center gap-5 text-xs font-semibold text-slate-600 dark:text-slate-300">
           <button
             onClick={() => setActiveView('portada')}
             className={`whitespace-nowrap shrink-0 hover:text-slate-900 dark:hover:text-white transition-colors ${
-              activeView === 'portada' ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : ''
+              activeView === 'portada' ? 'text-indigo-600 dark:text-indigo-400 font-bold' : ''
             }`}
           >
-            Inicio & Metodología
+            Inicio
           </button>
           <button
             onClick={() => setActiveView('unidades')}
             className={`whitespace-nowrap shrink-0 hover:text-slate-900 dark:hover:text-white transition-colors ${
-              activeView.startsWith('unidad') || activeView === 'unidades' ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : ''
+              activeView.startsWith('unidad') || activeView === 'unidades' ? 'text-indigo-600 dark:text-indigo-400 font-bold' : ''
             }`}
           >
-            Unidades Temáticas
+            Unidades
           </button>
           <button
             onClick={() => setActiveView('talleres-practicos')}
             className={`whitespace-nowrap shrink-0 hover:text-slate-900 dark:hover:text-white transition-colors ${
-              activeView === 'talleres-practicos' ? 'text-indigo-600 dark:text-indigo-400 font-semibold' : ''
+              activeView === 'talleres-practicos' ? 'text-indigo-600 dark:text-indigo-400 font-bold' : ''
             }`}
           >
-            Talleres & Atajos
+            Talleres
           </button>
           <button
-            onClick={onOpenGlossary}
-            className="whitespace-nowrap shrink-0 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1.5"
+            onClick={() => onOpenGlossary()}
+            className="whitespace-nowrap shrink-0 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center gap-1"
           >
-            <HelpCircle className="w-4 h-4 text-slate-400 dark:text-slate-500" />
-            <span>Glosario TIC</span>
+            <HelpCircle className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
+            <span>Glosario</span>
           </button>
         </nav>
 
         {/* Zone 3: 1 primary action + accessible controls + theme toggle + circular progress */}
-        <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           {/* Circular Progress Gauge */}
           <div
             className="flex items-center gap-2 px-2.5 py-1 bg-slate-50 dark:bg-slate-800/80 border border-slate-200/90 dark:border-slate-700/80 rounded-xl"
